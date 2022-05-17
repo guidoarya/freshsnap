@@ -1,11 +1,11 @@
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 // import uuid from "uuid/v4";
 
 const storageMultiple = multer.diskStorage({
   destination: function (req, file, cb) {
-    var dir = "public/images";
+    var dir = "public/uploads";
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
@@ -26,7 +26,7 @@ const uploadMultiple = multer({
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: "public/images",
+  destination: "public/uploads",
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
   },
@@ -56,4 +56,5 @@ function checkFileType(file, cb) {
   }
 }
 
-module.exports = { uploadMultiple, uploadSingle };
+export default uploadSingle;
+// module.exports = { uploadMultiple, uploadSingle };

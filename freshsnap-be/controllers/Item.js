@@ -1,12 +1,12 @@
-import Item from "../models/itemModel.js";
+import Items from "../models/itemModel.js";
 import { Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
 
 export const getItem = async (req, res) => {
   try {
-    const item = await Item.findAll({
-      attributes: ["id", "name", "type", "dummy_picture", "howtokeep", "reference"],
+    const item = await Items.findAll({
+      attributes: ["id", "name", "type", "image", "howtokeep", "reference"],
     });
     res.json(item);
   } catch (error) {
@@ -28,10 +28,10 @@ export const addItem = async (req, res) => {
 
   const upload = "uploads/" + req.file.filename;
   try {
-    await Item.create({
+    await Items.create({
       name: name,
       type: type,
-      dummy_picture: upload,
+      image: upload,
       howtokeep: howtokeep,
       reference: reference,
     });
@@ -43,7 +43,7 @@ export const addItem = async (req, res) => {
 
 export const deleteItem = async (req, res) => {
   console.log(req.params.id);
-  const findItem = await Item.findOne({
+  const findItem = await Items.findOne({
     where: {
       id: req.params.id,
     },
@@ -53,11 +53,9 @@ export const deleteItem = async (req, res) => {
     return res.send("Item is not found!");
   }
 
-  console.log(findItem.dummy_picture);
-
   try {
-    await fs.unlink(path.join(`public/uploads/${findItem.dummy_picture}`));
-    await Item.destroy({
+    await fs.unlinkSync(path.join(`public/${findItem.image}`));
+    await Items.destroy({
       where: {
         id: req.params.id,
       },

@@ -3,22 +3,19 @@ import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
 
-const Items = db.define(
-  "item",
+const Users = db.define(
+  "user",
   {
     name: {
       type: DataTypes.STRING,
     },
-    type: {
+    email: {
+      type: DataTypes.STRING,
+    },
+    password: {
       type: DataTypes.STRING,
     },
     image: {
-      type: DataTypes.STRING,
-    },
-    howtokeep: {
-      type: DataTypes.STRING,
-    },
-    reference: {
       type: DataTypes.STRING,
     },
   },
@@ -27,4 +24,4 @@ const Items = db.define(
   }
 );
 
-export default Items;
+export default Users;
