@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">Android-Freshsnap</string>
+    <string name="fresh_snap_title">FreshSnap</string>
+
+    <string name="fruits">Fruits</string>
+    <string name="vegetables">Vegetables</string>
+
+    <string name="apple">Apple</string>
+    <string name="broccoli">Broccoli</string>
+
+    <string name="background">Background</string>
+
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="process_image">Process Image</string>
+
+    <string-array name="data_fruits_name">
+        <item>Apple</item>
+        <item>Banana</item>
+        <item>Cherry</item>
+        <item>Orange</item>
+    </string-array>
+
+    <string-array name="data_vegetables_name">
+        <item>Broccoli</item>
+        <item>Cabbage</item>
+        <item>Cucumber</item>
+        <item>Spinach</item>
+    </string-array>
+
+    <integer-array name="data_photo_fruits">
+        <item>@drawable/apple_fruit</item>
+        <item>@drawable/banana_fruit</item>
+        <item>@drawable/cherry_fruit</item>
+        <item>@drawable/orange_fruit</item>
+    </integer-array>
+
+    <integer-array name="data_photo_vegetables">
+        <item>@drawable/broccoli_vegetable</item>
+        <item>@drawable/cabbage_vegetable</item>
+        <item>@drawable/cucumber_vegetable</item>
+        <item>@drawable/spinach_vegetable</item>
+    </integer-array>
 </resources>
