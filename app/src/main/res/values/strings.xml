@@ -13,6 +13,13 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="process_image">Process Image</string>
+    <string name="login">Login</string>
+    <string name="tv_regist">Don’t have an account?</string>
+    <string name="register">Register</string>
+    <string name="tv_greet">Get\'s started</string>
+    <string name="tv_create">Create an account</string>
+    <string name="username">Username</string>
+    <string name="tv_login">Already have an account?</string>
 
     <string-array name="data_fruits_name">
         <item>Apple</item>

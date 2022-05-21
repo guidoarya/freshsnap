@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.RegisterActivity">
+
+    <TextView
+        android:id="@+id/tv_greet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_greet"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/tv_create"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_greet"
+        app:layout_constraintStart_toStartOf="@id/tv_greet"
+        app:layout_constraintTop_toBottomOf="@id/tv_greet" />
+
+    <EditText
+        android:id="@+id/edt_user"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corners_outline"
+        android:drawableStart="@drawable/ic_user"
+        android:drawablePadding="8dp"
+        android:hint="@string/username"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_create"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create" />
+
+    <com.daniel.android_freshsnap.customview.Email
+        android:id="@+id/edt_email"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/corners_outline"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintEnd_toEndOf="@id/edt_user"
+        app:layout_constraintStart_toStartOf="@id/edt_user"
+        app:layout_constraintTop_toBottomOf="@id/edt_user" />
+
+    <com.daniel.android_freshsnap.customview.Password
+        android:id="@+id/edt_password"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/corners_outline"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintStart_toStartOf="@id/edt_email"
+        app:layout_constraintEnd_toEndOf="@id/edt_email"
+        app:layout_constraintTop_toBottomOf="@id/edt_email"/>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="150dp"
+        android:layout_height="64dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="73dp"
+        android:backgroundTint="@color/green_primary"
+        android:text="@string/register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_password"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_user"
+        app:layout_constraintVertical_bias="0.381"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
