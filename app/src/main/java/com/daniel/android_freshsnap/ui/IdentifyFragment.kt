@@ -1,60 +1,100 @@
 package com.daniel.android_freshsnap.ui
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
+import com.daniel.android_freshsnap.CameraActivity
+import com.daniel.android_freshsnap.MainActivity
+import com.daniel.android_freshsnap.MainActivity.Companion.CAMERA_X_RESULT
 import com.daniel.android_freshsnap.R
+import com.daniel.android_freshsnap.databinding.FragmentFirstBinding
+import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
+import com.daniel.android_freshsnap.utils.*
+import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
+import java.io.File
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SecondFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class IdentifyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding : FragmentSecondBinding
+
+    private var currentFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        binding = FragmentSecondBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            IdentifyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.cameraButton.setOnClickListener { startCameraX() }
+        binding.galleryButton.setOnClickListener { startGallery() }
+        binding.uploadButton.setOnClickListener { uploadImage() }
+    }
+
+    private fun uploadImage() {
+        //Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startGallery() {
+        val intent = Intent().apply {
+            action = Intent.ACTION_GET_CONTENT
+            type = "image/*"
+        }
+        launcherIntentGallery.launch(Intent.createChooser(intent, "Choose a picture!"))
+    }
+
+    private fun startTakePhoto() {
+
+    }
+
+    private fun startCameraX() {
+        launcherIntentCameraX.launch(Intent(requireContext(), CameraActivity::class.java))
+    }
+
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = it.data?.getSerializableExtra("picture") as File
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(myFile.path),
+                isBackCamera
+            )
+            binding.previewImageView.setImageBitmap(result)
+        }
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == AppCompatActivity.RESULT_OK) {
+            currentFile = Utils.uriToFile(it.data?.data as Uri, requireContext())
+            binding.previewImageView.setImageURI(Uri.fromFile(currentFile))
+        }
     }
 }
