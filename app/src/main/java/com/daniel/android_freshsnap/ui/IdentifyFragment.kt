@@ -1,26 +1,17 @@
 package com.daniel.android_freshsnap.ui
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
 import com.daniel.android_freshsnap.CameraActivity
-import com.daniel.android_freshsnap.MainActivity
 import com.daniel.android_freshsnap.MainActivity.Companion.CAMERA_X_RESULT
-import com.daniel.android_freshsnap.R
-import com.daniel.android_freshsnap.databinding.FragmentFirstBinding
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
 import com.daniel.android_freshsnap.utils.*
 import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
@@ -33,16 +24,16 @@ class IdentifyFragment : Fragment() {
 
     private var currentFile: File? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,10 +56,6 @@ class IdentifyFragment : Fragment() {
             type = "image/*"
         }
         launcherIntentGallery.launch(Intent.createChooser(intent, "Choose a picture!"))
-    }
-
-    private fun startTakePhoto() {
-
     }
 
     private fun startCameraX() {
