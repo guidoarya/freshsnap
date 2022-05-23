@@ -25,8 +25,6 @@ export const Register = async (req, res) => {
     },
   });
 
-  console.log(checkEmail);
-
   if (checkEmail) {
     return res.status(400).json({
       msg: "Email has been used!",
