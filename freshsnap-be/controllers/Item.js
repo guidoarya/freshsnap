@@ -6,7 +6,7 @@ import path from "path";
 export const getItem = async (req, res) => {
   try {
     const item = await Items.findAll({
-      attributes: ["id", "name", "type", "image", "howtokeep", "reference"],
+      attributes: ["id", "name", "type", "image", "howtokeep"],
     });
     res.json(item);
   } catch (error) {
@@ -15,14 +15,14 @@ export const getItem = async (req, res) => {
 };
 
 export const addItem = async (req, res) => {
-  const { name, type, howtokeep, reference } = req.body;
+  const { name, type, howtokeep } = req.body;
   console.log(req.file.path);
 
   if (!req.file) {
     return res.send("Input image tidak adaa!");
   }
 
-  if (!name || !type || !howtokeep || !reference) {
+  if (!name || !type || !howtokeep) {
     return res.send("All field must be filled!");
   }
 
@@ -33,7 +33,6 @@ export const addItem = async (req, res) => {
       type: type,
       image: upload,
       howtokeep: howtokeep,
-      reference: reference,
     });
     return res.json({ msg: "New item has been created!" });
   } catch (error) {
@@ -42,7 +41,6 @@ export const addItem = async (req, res) => {
 };
 
 export const deleteItem = async (req, res) => {
-  console.log(req.params.id);
   const findItem = await Items.findOne({
     where: {
       id: req.params.id,

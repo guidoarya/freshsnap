@@ -5,63 +5,60 @@ import path from "path";
 
 export const getReference = async (req, res) => {
   try {
-    const item = await Items.findAll({
-      attributes: ["id", "name", "type", "image", "howtokeep", "reference"],
+    const reference = await References.findAll({
+      attributes: ["id", "reference_name", "name", "image"],
     });
-    res.json(item);
+    res.json(reference);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const addItem = async (req, res) => {
-  const { name, type, howtokeep, reference } = req.body;
+export const addReference = async (req, res) => {
+  const { reference_name, name } = req.body;
   console.log(req.file.path);
 
   if (!req.file) {
-    return res.send("Input image tidak adaa!");
+    return res.send("Input image is not found!");
   }
 
-  if (!name || !type || !howtokeep || !reference) {
+  if (!name || !reference_name) {
     return res.send("All field must be filled!");
   }
 
   const upload = "uploads/" + req.file.filename;
   try {
-    await Items.create({
+    await References.create({
+      reference_name: reference_name,
       name: name,
-      type: type,
       image: upload,
-      howtokeep: howtokeep,
-      reference: reference,
     });
-    return res.json({ msg: "New item has been created!" });
+    return res.json({ msg: "New reference has been created!" });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteItem = async (req, res) => {
-  console.log(req.params.id);
-  const findItem = await Items.findOne({
+export const deleteReference = async (req, res) => {
+  const findReference = await References.findOne({
     where: {
       id: req.params.id,
     },
   });
 
-  if (!findItem) {
-    return res.send("Item is not found!");
+  if (!findReference) {
+    return res.send("References is not found!");
   }
 
   try {
-    await fs.unlinkSync(path.join(`public/${findItem.image}`));
-    await Items.destroy({
+    await fs.unlinkSync(path.join(`public/${findReference.image}`));
+    await References.destroy({
       where: {
         id: req.params.id,
       },
     });
     res.json({
-      msg: "Item was deleted!",
+      msg: "References was deleted!",
     });
   } catch (err) {
     console.log({ msg: err.message });

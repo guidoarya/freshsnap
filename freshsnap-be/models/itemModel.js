@@ -18,9 +18,6 @@ const Items = db.define(
     howtokeep: {
       type: DataTypes.STRING,
     },
-    reference: {
-      type: DataTypes.STRING,
-    },
   },
   {
     freezeTableName: true,

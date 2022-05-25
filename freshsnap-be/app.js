@@ -19,24 +19,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public")));
 
-// const diskStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "./public/uploads");
-//   },
-//   filename: (req, file, cb) => {
-//     console.log(file);
-//     cb(null, new Date().getTime() + new Date().getDay() + path.extname(file.originalname));
-//   },
-// });
-
-// const imgFilter = (req, file, cb) => {
-//   if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-
 try {
   await db.authenticate();
   console.log("Database connected");
