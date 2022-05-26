@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.DetailPercentFragment">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="320dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/orange_fruit"
+            android:background="@drawable/corners_outline_detail"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/orange"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/percentage"
+            android:layout_marginTop="25dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/tv_type"/>
+
+        <View
+            android:id="@+id/vector_3"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/percent" />
+
+        <ImageView
+            android:id="@+id/image_percent"
+            android:layout_width="320dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/persen"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="@id/vector_3"
+            app:layout_constraintTop_toBottomOf="@id/vector_3"/>
+
+        <TextView
+            android:id="@+id/tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pro_tips"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/image_percent"
+            app:layout_constraintTop_toBottomOf="@id/image_percent"/>
+
+        <View
+            android:id="@+id/vector_2"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tips" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tips"
+            android:lineSpacingExtra="8dp"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/vector_2"
+            app:layout_constraintTop_toBottomOf="@id/vector_2"/>
+
+        <TextView
+            android:id="@+id/recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/food_reference"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_tips"
+            app:layout_constraintTop_toBottomOf="@id/tv_tips"/>
+
+        <View
+            android:id="@+id/vector_1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipe" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/vector_1"
+            app:layout_constraintEnd_toEndOf="@id/vector_1"
+            app:layout_constraintTop_toBottomOf="@id/vector_1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

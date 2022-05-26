@@ -6,14 +6,40 @@
     android:layout_height="match_parent"
     tools:context="ui.AccountFragment">
 
+    <ImageView
+        android:id="@+id/imageUser"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_baseline_account_circle_24"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account Fragment"
+        android:text="@string/username"
+        android:layout_marginStart="16dp"
         android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/imageUser"
+        app:layout_constraintTop_toTopOf="@id/imageUser"
+        app:layout_constraintBottom_toBottomOf="@id/imageUser"/>
+
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="150dp"
+        android:layout_height="64dp"
+        android:drawableLeft="@drawable/ic_exit"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/green_primary"
+        android:text="@string/logout"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageUser"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

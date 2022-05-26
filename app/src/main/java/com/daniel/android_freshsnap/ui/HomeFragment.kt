@@ -74,6 +74,28 @@ class HomeFragment : Fragment() {
     private fun showRecyclerListFruit() {
         val listFruitAdapter = ListFruitAdapter(list_fruit)
         binding.fruitsRecyclerview.adapter = listFruitAdapter
+
+        listFruitAdapter.setOnItemClickCallback(object : ListFruitAdapter.OnItemClickCallback {
+            override fun onItemClicked(fruits: Fruits) {
+                showSelectedUser(fruits)
+            }
+        })
+    }
+
+    private fun showSelectedUser(fruits: Fruits){
+        val mDetailFragment = DetailFragment()
+
+        val mBundle = Bundle()
+        mBundle.putParcelable(DetailFragment.EXTRA_USER, fruits)
+
+        mDetailFragment.arguments = mBundle
+
+        val mFragmentManager = parentFragmentManager
+        mFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment, mDetailFragment, DetailFragment::class.java.simpleName)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private val listVegetables: ArrayList<Vegetables>
@@ -93,6 +115,4 @@ class HomeFragment : Fragment() {
         val listVegetableAdapter = ListVegetableAdapter(list_vegetable)
         binding.vegetablesRecyclerview.adapter = listVegetableAdapter
     }
-
-
 }

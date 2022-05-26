@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.daniel.android_freshsnap.CameraActivity
 import com.daniel.android_freshsnap.MainActivity.Companion.CAMERA_X_RESULT
+import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
 import com.daniel.android_freshsnap.utils.*
 import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
@@ -24,12 +25,6 @@ class IdentifyFragment : Fragment() {
 
     private var currentFile: File? = null
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }*/
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,13 +36,22 @@ class IdentifyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+
         binding.cameraButton.setOnClickListener { startCameraX() }
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
     }
 
     private fun uploadImage() {
-        //Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+        val mDetailPercentFragment = DetailPercentFragment()
+        val mFragmentManager = parentFragmentManager
+        mFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment, mDetailPercentFragment, DetailPercentFragment::class.java.simpleName)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private fun startGallery() {

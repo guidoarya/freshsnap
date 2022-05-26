@@ -6,7 +6,12 @@
     <string name="vegetables">Vegetables</string>
 
     <string name="apple">Apple</string>
+    <string name="orange">Orange</string>
     <string name="broccoli">Broccoli</string>
+    <string name="cake">Cake</string>
+
+    <string name="howto">1. Wrap this plastic\n2. Last 10 - 15 days in refrigerator\n3. Last 2 - 3 days only in room temprature (25°C)</string>
+    <string name="tips">1. Pick that has orange coloured\n2. Pick that has dotted surfaces\n3. Pick orange that solid and heavy\n4. Avoid that has light orange coloured\n5. Avoid orange that bruised</string>
 
     <string name="background">Background</string>
 
@@ -20,6 +25,7 @@
     <string name="tv_create">Create an account</string>
     <string name="username">Username</string>
     <string name="tv_login">Already have an account?</string>
+    <string name="logout">Logout</string>
 
     <string-array name="data_fruits_name">
         <item>Apple</item>
@@ -35,6 +41,12 @@
         <item>Spinach</item>
     </string-array>
 
+    <string-array name="data_recipe">
+        <item>Pudding</item>
+        <item>Cake</item>
+        <item>Juice</item>
+    </string-array>
+
     <integer-array name="data_photo_fruits">
         <item>@drawable/apple_fruit</item>
         <item>@drawable/banana_fruit</item>
@@ -48,4 +60,16 @@
         <item>@drawable/cucumber_vegetable</item>
         <item>@drawable/spinach_vegetable</item>
     </integer-array>
+
+    <integer-array name="data_photo_recipe">
+        <item>@drawable/cake</item>
+        <item>@drawable/juice</item>
+        <item>@drawable/pudding</item>
+    </integer-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="how_to_keep">How to keep</string>
+    <string name="food_reference">Food and beverage reference</string>
+    <string name="percentage">Freshness Percentage</string>
+    <string name="pro_tips">Pro tips</string>
 </resources>
