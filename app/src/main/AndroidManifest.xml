@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LockedOrientationActivity"
     package="com.daniel.android_freshsnap">
 
     <uses-feature android:name="android.hardware.camera" />
@@ -30,6 +32,7 @@
         android:theme="@style/Theme.AndroidFreshsnap">
         <activity
             android:name=".ui.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,15 +42,19 @@
         </activity>
         <activity
             android:name=".ui.CameraActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
         </activity>
     </application>

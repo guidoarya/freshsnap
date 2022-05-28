@@ -1,6 +1,7 @@
 package com.daniel.android_freshsnap.ui
 
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.daniel.android_freshsnap.databinding.ActivityCameraBinding
 import com.daniel.android_freshsnap.utils.Utils.createFile
+
 
 class CameraActivity : AppCompatActivity() {
 
@@ -117,4 +119,5 @@ class CameraActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
+
 }
