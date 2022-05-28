@@ -1,4 +1,4 @@
-package com.daniel.android_freshsnap
+package com.daniel.android_freshsnap.ui
 
 import android.content.Intent
 import android.os.Build

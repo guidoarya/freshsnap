@@ -10,8 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.daniel.android_freshsnap.CameraActivity
-import com.daniel.android_freshsnap.MainActivity.Companion.CAMERA_X_RESULT
+import com.daniel.android_freshsnap.ui.MainActivity.Companion.CAMERA_X_RESULT
 import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
 import com.daniel.android_freshsnap.utils.*

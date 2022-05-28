@@ -1,4 +1,4 @@
-package com.daniel.android_freshsnap
+package com.daniel.android_freshsnap.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.daniel.android_freshsnap.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.daniel.android_freshsnap.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +35,11 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = findNavController(R.id.fragment)
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.identifyFragment, R.id.accountFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.homeFragment,
+            R.id.identifyFragment,
+            R.id.accountFragment
+        ))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         bottomNavigationView.setupWithNavController(navController)
