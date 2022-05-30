@@ -72,4 +72,6 @@
     <string name="food_reference">Food and beverage reference</string>
     <string name="percentage">Freshness Percentage</string>
     <string name="pro_tips">Pro tips</string>
+    <string name="history">History</string>
+    <string name="date">Date - Month</string>
 </resources>
