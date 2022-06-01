@@ -16,6 +16,30 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  const user = await Users.findAll({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!user) {
+    return res.status(404).send("User not found!");
+  }
+  try {
+    await Users.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).send("User has been deleted!");
+  } catch (error) {
+    res.status(500).send(`${error}`);
+  }
+};
+
 export const getSpecifyUser = async (req, res) => {
   const id = req.params.id;
   try {

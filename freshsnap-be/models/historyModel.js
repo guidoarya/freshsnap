@@ -3,8 +3,8 @@ import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
 
-const References = db.define(
-  "reference-table",
+const History = db.define(
+  "history",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,14 +12,13 @@ const References = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    reference_name: {
+    item_name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
-    name: {
-      type: DataTypes.STRING,
-    },
-    image: {
-      type: DataTypes.STRING,
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
@@ -27,4 +26,4 @@ const References = db.define(
   }
 );
 
-export default References;
+export default History;

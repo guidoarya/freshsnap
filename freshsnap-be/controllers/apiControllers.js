@@ -1,3 +1,4 @@
+import History from "../models/historyModel.js";
 import Items from "../models/itemModel.js";
 import References from "../models/referenceModel.js";
 
@@ -50,5 +51,31 @@ export const detail = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const historyPage = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const HistoryDetail = await History.findAll({
+      where: {
+        id_user: id,
+      },
+      attributes: ["createdAt", "updatedAt"],
+    });
+
+    const Item = await Item.findAll({
+      where: {
+        name: HistoryDetail.item_name,
+      },
+      attributes: ["name", "image", "type"],
+    });
+
+    res.status(200).json({
+      HistoryDetail,
+      Item,
+    });
+  } catch (error) {
+    res.status(500).send(`Error, ${error}`);
   }
 };
