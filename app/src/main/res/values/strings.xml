@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Android-Freshsnap</string>
+    <string name="app_name2">Freshsnap</string>
     <string name="fresh_snap_title">FreshSnap</string>
 
     <string name="fruits">Fruits</string>

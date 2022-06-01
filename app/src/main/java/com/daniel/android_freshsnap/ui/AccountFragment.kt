@@ -60,7 +60,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
         }
     //
     private fun showRecyclerListFruit() {
-        val listAdapter = ListFruitAdapter(list_fruit)
+        val listAdapter = ListFruitAdapter(arrayListOf())
         binding.rvHistory.adapter = listAdapter
     }
 
