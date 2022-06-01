@@ -3,6 +3,7 @@ import { Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const getUser = async (req, res) => {
   try {
@@ -15,10 +16,23 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const Register = async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+export const getSpecifyUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await Users.findOne({
+      where: {
+        id: id,
+      },
+    });
+    res.json({ user });
+  } catch (err) {
+    console.log({ message: err.message });
+  }
+};
 
-  console.log(name, email, password);
+export const Register = async (req, res) => {
+  const { name, email, password } = req.body;
+
   const checkEmail = await Users.findOne({
     where: {
       email: email,
@@ -30,13 +44,12 @@ export const Register = async (req, res) => {
       msg: "Email has been used!",
     });
   }
-  if (!name || !email || !password || !confirmPassword) {
+  if (!name || !email || !password) {
     return res.status(400).json({
       msg: "All fields must be filled!",
     });
   }
 
-  if (password !== confirmPassword) return res.status(400).json({ msg: "Password and confirm password not match!" });
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
 
@@ -100,57 +113,34 @@ export const Login = async (req, res) => {
     const userId = user[0].id;
     const name = user[0].name;
     const email = user[0].email;
-    const accessToken = jwt.sign({ userId, name, email }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "1h",
-    });
-    const refreshToken = jwt.sign({ userId, name, email }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "1d",
-    });
-    await Users.update(
-      { refresh_token: refreshToken },
+
+    const token = jwt.sign(
       {
-        where: {
-          id: userId,
-        },
-      }
+        id: userId,
+        name: name,
+        email: email,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "10s" }
     );
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie("jwt", token, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    res.json({ accessToken });
+    res.json({ token });
   } catch (err) {
+    console.log(err);
     res.status(404).json({ msg: "Email not found!" });
   }
 };
 
 export const Logout = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) return res.sendStatus(204);
-
-  const user = await Users.findAll({
-    where: {
-      refresh_token: refreshToken,
-    },
-  });
-
-  if (!user[0]) {
-    res.sendStatus(204);
+  try {
+    const token = null;
+    res.cookie("jwt", token);
+    return res.status(200).json({ msg: "Logout successfully!" });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json(err);
   }
-
-  const userId = user[0].id;
-
-  await Users.update(
-    {
-      refresh_token: null,
-    },
-    {
-      where: {
-        id: userId,
-      },
-    }
-  );
-
-  res.clearCookie("refreshToken");
-  return res.sendStatus(200);
 };

@@ -16,7 +16,6 @@ export const getItem = async (req, res) => {
 
 export const addItem = async (req, res) => {
   const { name, type, howtokeep } = req.body;
-  console.log(req.file.path);
 
   if (!req.file) {
     return res.send("Input image tidak adaa!");

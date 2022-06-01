@@ -37,6 +37,14 @@ app.use(
 
 // app.use(upload.single("dummy_picture", "profilePict"));
 
+app.get("/", async (req, res) => {
+  try {
+    res.send(`Welcome to API Page for Kasbaik Backend for Users `);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.use(cookieParser());
 app.use(express.json());
 
