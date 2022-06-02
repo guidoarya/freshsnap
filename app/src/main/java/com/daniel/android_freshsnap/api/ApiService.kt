@@ -8,6 +8,10 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("home-page")
-    fun getHome(
+    fun getFruit(
     ): Call<HomeResponse>
+
+    @GET("home-page")
+    fun getVegetable(
+    ): Call<HomeResponse.VegetablesItem>
 }

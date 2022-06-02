@@ -1,25 +1,20 @@
 package com.daniel.android_freshsnap.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.adapter.ListFruitAdapter
 import com.daniel.android_freshsnap.adapter.ListVegetableAdapter
-import com.daniel.android_freshsnap.api.ApiConfig
-import com.daniel.android_freshsnap.api.response.HomeResponse
 import com.daniel.android_freshsnap.data.Fruits
 import com.daniel.android_freshsnap.databinding.FragmentFirstBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.daniel.android_freshsnap.viewmodel.HomeViewModel
 
 
 class HomeFragment : Fragment() {
@@ -28,6 +23,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var rvListFruits: RecyclerView
     private lateinit var listFruitAdapter: ListFruitAdapter
+
+    private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var rvListVegetables: RecyclerView
     private lateinit var listVegetableAdapter: ListVegetableAdapter
@@ -54,55 +51,30 @@ class HomeFragment : Fragment() {
         showRecyclerListFruit()
         showRecyclerListVegetables()
 
-        findDataApi()
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-    }
+        homeViewModel.findData()
 
-    /*private val listFruits: ArrayList<Fruits>
-        @SuppressLint("Recycle")
-        get() {
-            val dataNameFruit = resources.getStringArray(R.array.data_fruits_name)
-            val dataPhotoFruit = resources.obtainTypedArray(R.array.data_photo_fruits)
-            val listFruit = ArrayList<Fruits>()
-            for (i in dataNameFruit.indices) {
-                val fruit = Fruits(dataNameFruit[i], dataPhotoFruit.getResourceId(i, -1))
-                listFruit.add(fruit)
-            }
-            return listFruit
-        }*/
-
-    private fun findDataApi() {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getHome()
-        client.enqueue(object : Callback<HomeResponse> {
-            override fun onResponse(
-                call: Call<HomeResponse>,
-                response: Response<HomeResponse>
-            ) {
+        homeViewModel.listFruits.observe(viewLifecycleOwner) {
+            if (it != null) {
+                listFruitAdapter.setFruitData(it)
                 showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        Log.d(TAG, response.body().toString())
-                        showData(response.body()!!)
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
             }
-            override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
+        }
+
+        homeViewModel.listVegetables.observe(viewLifecycleOwner) {
+            if (it != null) {
+                listVegetableAdapter.setVegetableData(it)
                 showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
             }
-        })
+        }
+
+        homeViewModel.isLoading.observe(viewLifecycleOwner){
+            showLoading(it)
+        }
+
     }
 
-    private fun showData(data: HomeResponse){
-        val resultFruit = data.fruits
-        val resultVegetable = data.vegetables
-        listFruitAdapter.setFruitData(resultFruit)
-        listVegetableAdapter.setVegetableData(resultVegetable)
-    }
 
     private fun showRecyclerListFruit() {
         listFruitAdapter = ListFruitAdapter(arrayListOf())
@@ -111,8 +83,6 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = listFruitAdapter
         }
-        /*val listFruitAdapter = ListFruitAdapter(arrayListOf())
-        binding.fruitsRecyclerview.adapter = listFruitAdapter*/
 
         /*listFruitAdapter.setOnItemClickCallback(object : ListFruitAdapter.OnItemClickCallback {
             override fun onItemClicked(fruits: Fruits) {
@@ -167,7 +137,4 @@ class HomeFragment : Fragment() {
         }
     }
 
-    companion object {
-        private const val TAG = "MainActivity"
-    }
 }

@@ -1,15 +1,15 @@
 package com.daniel.android_freshsnap.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.daniel.android_freshsnap.api.response.FruitsItem
 import com.daniel.android_freshsnap.api.response.HomeResponse
 import com.daniel.android_freshsnap.databinding.FruitLayoutBinding
 import java.util.ArrayList
 
-class ListFruitAdapter(private val listFruit: ArrayList<FruitsItem>) : RecyclerView.Adapter<ListFruitAdapter.ListViewHolder>() {
+class ListFruitAdapter(private val listFruit: ArrayList<HomeResponse.FruitsItem>) : RecyclerView.Adapter<ListFruitAdapter.ListViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
@@ -37,12 +37,13 @@ class ListFruitAdapter(private val listFruit: ArrayList<FruitsItem>) : RecyclerV
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(data: FruitsItem)
+        fun onItemClicked(data: HomeResponse.FruitsItem)
     }
 
     override fun getItemCount(): Int = listFruit.size
 
-    fun setFruitData(data: List<FruitsItem>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun setFruitData(data: List<HomeResponse.FruitsItem>){
         listFruit.clear()
         listFruit.addAll(data)
         notifyDataSetChanged()

@@ -9,7 +9,7 @@ data class HomeResponse(
 
 	@field:SerializedName("Fruits")
 	val fruits: List<FruitsItem>
-)
+){
 
 data class FruitsItem(
 
@@ -57,4 +57,4 @@ data class VegetablesItem(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: String
-)
+)}
