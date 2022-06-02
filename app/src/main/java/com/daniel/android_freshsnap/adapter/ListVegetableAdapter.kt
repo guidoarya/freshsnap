@@ -10,6 +10,13 @@ import com.daniel.android_freshsnap.databinding.VegetableLayoutBinding
 import java.util.ArrayList
 
 class ListVegetableAdapter (private val listVegetable: ArrayList<HomeResponse.VegetablesItem>) : RecyclerView.Adapter<ListVegetableAdapter.ListViewHolder>() {
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     class ListViewHolder(var binding: VegetableLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -22,8 +29,15 @@ class ListVegetableAdapter (private val listVegetable: ArrayList<HomeResponse.Ve
         val modifyUrl = result.image
         holder.binding.vegetablesNameTv.text = result.name
         Glide.with(holder.itemView)
-            .load("http://192.168.0.22:5000/$modifyUrl")
+            .load("http://172.168.1.103:5000/$modifyUrl")
             .into(holder.binding.vegetablesImage)
+        holder.itemView.setOnClickListener{
+            onItemClickCallback.onItemClicked(listVegetable[holder.adapterPosition])
+        }
+    }
+
+    interface OnItemClickCallback{
+        fun onItemClicked(data: HomeResponse.VegetablesItem)
     }
 
     override fun getItemCount(): Int = listVegetable.size

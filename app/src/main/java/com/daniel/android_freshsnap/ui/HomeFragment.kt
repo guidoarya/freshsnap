@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.adapter.ListFruitAdapter
 import com.daniel.android_freshsnap.adapter.ListVegetableAdapter
-import com.daniel.android_freshsnap.data.Fruits
+import com.daniel.android_freshsnap.api.response.HomeResponse
 import com.daniel.android_freshsnap.databinding.FragmentFirstBinding
 import com.daniel.android_freshsnap.viewmodel.HomeViewModel
 
@@ -84,18 +84,21 @@ class HomeFragment : Fragment() {
             adapter = listFruitAdapter
         }
 
-        /*listFruitAdapter.setOnItemClickCallback(object : ListFruitAdapter.OnItemClickCallback {
-            override fun onItemClicked(fruits: Fruits) {
-                showSelectedUser(fruits)
+        listFruitAdapter.setOnItemClickCallback(object : ListFruitAdapter.OnItemClickCallback {
+            override fun onItemClicked(items: HomeResponse.FruitsItem) {
+                showSelectedUser(items.name, items.image, items.howtokeep, items.id)
             }
-        })*/
+        })
     }
 
-    private fun showSelectedUser(fruits: Fruits){
+    private fun showSelectedUser(name: String, image: String, howtokeep: String, id: Int){
         val mDetailFragment = DetailFragment()
 
         val mBundle = Bundle()
-        mBundle.putParcelable(DetailFragment.EXTRA_USER, fruits)
+        mBundle.putString(DetailFragment.EXTRA_NAME, name)
+        mBundle.putString(DetailFragment.EXTRA_PHOTO, image)
+        mBundle.putString(DetailFragment.EXTRA_HOW, howtokeep)
+        mBundle.putInt(DetailFragment.EXTRA_ID, id)
 
         mDetailFragment.arguments = mBundle
 
@@ -107,19 +110,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    /*private val listVegetables: ArrayList<Vegetables>
-        @SuppressLint("Recycle")
-        get() {
-            val dataNameVegetable = resources.getStringArray(R.array.data_vegetables_name)
-            val dataPhotoVegetable = resources.obtainTypedArray(R.array.data_photo_vegetables)
-            val listVegetable = ArrayList<Vegetables>()
-            for (i in dataNameVegetable.indices) {
-                val vegetable = Vegetables(dataNameVegetable[i], dataPhotoVegetable.getResourceId(i, -1))
-                listVegetable.add(vegetable)
-            }
-            return listVegetable
-        }*/
-
     private fun showRecyclerListVegetables() {
         listVegetableAdapter = ListVegetableAdapter(arrayListOf())
         rvListVegetables = binding.vegetablesRecyclerview
@@ -127,6 +117,12 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = listVegetableAdapter
         }
+
+        listVegetableAdapter.setOnItemClickCallback(object : ListVegetableAdapter.OnItemClickCallback {
+            override fun onItemClicked(items: HomeResponse.VegetablesItem) {
+                showSelectedUser(items.name, items.image, items.howtokeep, items.id)
+            }
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {

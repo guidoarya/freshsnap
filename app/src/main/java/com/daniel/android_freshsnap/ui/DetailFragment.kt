@@ -1,33 +1,33 @@
 package com.daniel.android_freshsnap.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.adapter.ListRecipeAdapter
-import com.daniel.android_freshsnap.data.Fruits
-import com.daniel.android_freshsnap.data.Recipe
 import com.daniel.android_freshsnap.databinding.FragmentDetailBinding
+import com.daniel.android_freshsnap.viewmodel.DetailViewModel
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
 
-    private val list_recipe = ArrayList<Recipe>()
+    private lateinit var rvRecipe: RecyclerView
+    private lateinit var listRecipeAdapter: ListRecipeAdapter
+
+    private lateinit var detailViewModel: DetailViewModel
 
     companion object {
-        var EXTRA_USER = "extra_user"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        list_recipe.addAll(listRecipe)
+        var EXTRA_NAME = "name"
+        var EXTRA_PHOTO = "photo"
+        var EXTRA_HOW = "howto"
+        var EXTRA_ID = "id"
     }
 
     override fun onCreateView(
@@ -47,39 +47,65 @@ class DetailFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayUseLogoEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "Fruit Detail"
 
-        if (arguments != null) {
-            val data = arguments?.getParcelable<Fruits>(EXTRA_USER) as Fruits
-            with(binding) {
-                Glide.with(binding.imageView)
-                    .load(data.photo_fruit)
-                    .into(imageView)
-                tvType.text = data.name_fruit
-            }
-        }
 
-        binding.rvRecipe.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val id = arguments?.getInt(EXTRA_ID)
 
+        rvRecipe = binding.rvRecipe
         binding.rvRecipe.setHasFixedSize(true)
 
         showRecyclerListRecipe()
-    }
+        setData()
 
-    private val listRecipe: ArrayList<Recipe>
-        @SuppressLint("Recycle")
-        get() {
-            val dataNameRecipe = resources.getStringArray(R.array.data_recipe)
-            val dataPhotoRecipe = resources.obtainTypedArray(R.array.data_photo_recipe)
-            val listRecipe = ArrayList<Recipe>()
-            for (i in dataNameRecipe.indices) {
-                val recipe = Recipe(dataNameRecipe[i], dataPhotoRecipe.getResourceId(i, -1))
-                listRecipe.add(recipe)
+        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+
+        setId(id)
+
+        detailViewModel.listRecipe.observe(viewLifecycleOwner){
+            if (it !=null){
+                listRecipeAdapter.setDetail(it)
+                showLoading(false)
             }
-            return listRecipe
         }
 
+        detailViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+    }
+
+    private fun setId(id: Int?){
+        showLoading(true)
+        detailViewModel.findDetail(id)
+    }
+
+    private fun setData() {
+        if (arguments != null) {
+            val name = arguments?.getString(EXTRA_NAME).toString()
+            val image = arguments?.getString(EXTRA_PHOTO).toString()
+            val howto = arguments?.getString(EXTRA_HOW).toString()
+            with(binding) {
+                Glide.with(binding.imageView)
+                    .load("http://172.168.1.103:5000/$image")
+                    .into(imageView)
+                tvType.text = name
+                tvHowto.text = howto
+            }
+        }
+    }
+
     private fun showRecyclerListRecipe() {
-        val listRecipeAdapter = ListRecipeAdapter(list_recipe)
-        binding.rvRecipe.adapter = listRecipeAdapter
+        listRecipeAdapter = ListRecipeAdapter(arrayListOf())
+        rvRecipe = binding.rvRecipe
+        rvRecipe.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = listRecipeAdapter
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }

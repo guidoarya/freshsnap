@@ -1,5 +1,6 @@
 package com.daniel.android_freshsnap.api
 
+import com.daniel.android_freshsnap.api.response.DetailResponse
 import com.daniel.android_freshsnap.api.response.HomeResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -11,7 +12,8 @@ interface ApiService {
     fun getFruit(
     ): Call<HomeResponse>
 
-    @GET("home-page")
-    fun getVegetable(
-    ): Call<HomeResponse.VegetablesItem>
+    @GET("detail/{id}")
+    fun getDetail(
+        @Path("id") id: Int?
+    ): Call<DetailResponse>
 }

@@ -16,12 +16,12 @@ import com.daniel.android_freshsnap.databinding.FragmentDetailPercentBinding
 class DetailPercentFragment : Fragment() {
     private lateinit var binding: FragmentDetailPercentBinding
 
-    private val list_recipe = ArrayList<Recipe>()
+    //private val list_recipe = ArrayList<Recipe>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        list_recipe.addAll(listRecipe)
+      //  list_recipe.addAll(listRecipe)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +39,14 @@ class DetailPercentFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayUseLogoEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "Fruit Detail Percent"
 
-        binding.rvRecipe.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        //binding.rvRecipe.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        binding.rvRecipe.setHasFixedSize(true)
+        //binding.rvRecipe.setHasFixedSize(true)
 
-        showRecyclerListRecipe()
+        //showRecyclerListRecipe()
     }
 
-    private val listRecipe: ArrayList<Recipe>
+    /*private val listRecipe: ArrayList<Recipe>
         @SuppressLint("Recycle")
         get() {
             val dataNameRecipe = resources.getStringArray(R.array.data_recipe)
@@ -62,5 +62,5 @@ class DetailPercentFragment : Fragment() {
     private fun showRecyclerListRecipe() {
         val listRecipeAdapter = ListRecipeAdapter(list_recipe)
         binding.rvRecipe.adapter = listRecipeAdapter
-    }
+    }*/
 }
