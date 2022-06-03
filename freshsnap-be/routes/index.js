@@ -1,7 +1,7 @@
 import express from "express";
 import { getItem, addItem, deleteItem } from "../controllers/Item.js";
 import { getUser, Register, updateUser, Login, Logout, getSpecifyUser, deleteUser } from "../controllers/User.js";
-import uploadSingle from "../middlewares/multer.js";
+import { uploadGoogleStorage, uploadSingle } from "../middlewares/multer.js";
 import { detail, historyPage, homePage } from "../controllers/apiControllers.js";
 import { addReference, deleteReference, getReference } from "../controllers/Reference.js";
 import Auth from "../middlewares/auth.js";
@@ -11,11 +11,11 @@ const router = express.Router();
 
 // Item
 router.get("/item", getItem);
-router.post("/item", uploadSingle, addItem);
+router.post("/item", uploadGoogleStorage.single("image"), addItem);
 router.delete("/item/:id", deleteItem);
 
 // User
-router.get("/user", getUser);
+router.get("/user", Auth.verifyTokenUser, getUser);
 router.delete("/user", deleteUser);
 router.get("/user/:id", Auth.verifyTokenUser, getSpecifyUser);
 router.post("/user", uploadSingle, Register);
@@ -25,16 +25,16 @@ router.delete("/logout", Logout);
 
 // Reference
 router.get("/reference", getReference);
-router.post("/reference", uploadSingle, addReference);
+router.post("/reference", uploadGoogleStorage.single("image"), addReference);
 router.delete("/reference/:id", deleteReference);
 
 // History
-router.get("/history", getHistory);
-router.post("/history", addHistory);
+router.get("/history", Auth.verifyTokenUser, getHistory);
+router.post("/history", Auth.verifyTokenUser, uploadSingle, addHistory);
 
 // API Routes
 router.get("/home-page", homePage);
 router.get("/detail/:id", detail);
-router.get("/history-page", historyPage);
+router.get("/history-page", Auth.verifyTokenUser, historyPage);
 
 export default router;

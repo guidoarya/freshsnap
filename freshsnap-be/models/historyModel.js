@@ -20,6 +20,10 @@ const History = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    location: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
   },
   {
     freezeTableName: true,

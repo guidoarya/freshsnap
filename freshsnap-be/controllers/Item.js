@@ -1,16 +1,17 @@
 import Items from "../models/itemModel.js";
-import { Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
+import { bucket } from "../middlewares/multer.js";
+import streamifier from "streamifier";
 
 export const getItem = async (req, res) => {
   try {
     const item = await Items.findAll({
       attributes: ["id", "name", "type", "image", "howtokeep"],
     });
-    res.json(item);
+    res.status(200).json(item);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(`Error, ${error}`);
   }
 };
 
@@ -18,24 +19,36 @@ export const addItem = async (req, res) => {
   const { name, type, howtokeep } = req.body;
 
   if (!req.file) {
-    return res.send("Input image tidak adaa!");
+    return res.status(404).send("Image field must be filled!");
   }
 
   if (!name || !type || !howtokeep) {
-    return res.send("All field must be filled!");
+    return res.status(404).send("All field must be filled!");
   }
 
-  const upload = "uploads/" + req.file.filename;
+  const blob = bucket.file(req.file.originalname.replace("", `freshsnap-${Date.now()}`));
+  const blobStream = blob.createWriteStream();
   try {
+    const upload = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
     await Items.create({
       name: name,
       type: type,
       image: upload,
       howtokeep: howtokeep,
     });
-    return res.json({ msg: "New item has been created!" });
+    return new Promise((resolve, reject) => {
+      streamifier
+        .createReadStream(req.file.buffer)
+        .on("error", (err) => {
+          return reject(err);
+        })
+        .pipe(blobStream)
+        .on("finish", (resp) => {
+          res.status(201).send("New item has been created!");
+        });
+    });
   } catch (error) {
-    console.log(error);
+    res.status(500).send(`Error, ${error}`);
   }
 };
 
@@ -47,20 +60,18 @@ export const deleteItem = async (req, res) => {
   });
 
   if (!findItem) {
-    return res.send("Item is not found!");
+    return res.status(404).send("Item is not found!");
   }
 
   try {
-    await fs.unlinkSync(path.join(`public/${findItem.image}`));
+    // await fs.unlinkSync(path.join(`public/${findItem.image}`));
     await Items.destroy({
       where: {
         id: req.params.id,
       },
     });
-    res.json({
-      msg: "Item was deleted!",
-    });
+    res.status(200).send("Item was deleted!");
   } catch (err) {
-    console.log({ msg: err.message });
+    res.status(500).send(`Error, ${error}`);
   }
 };

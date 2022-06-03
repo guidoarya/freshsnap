@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import db from "./config/database.js";
 import router from "./routes/index.js";
+// import router from "./middlewares/multerCs.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import multer from "multer";

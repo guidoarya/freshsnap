@@ -1,7 +1,8 @@
 import References from "../models/referenceModel.js";
-import { Sequelize } from "sequelize";
 import fs from "fs";
 import path from "path";
+import { bucket } from "../middlewares/multer.js";
+import streamifier from "streamifier";
 
 export const getReference = async (req, res) => {
   try {
@@ -10,32 +11,46 @@ export const getReference = async (req, res) => {
     });
     res.json(reference);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(`Error, ${error}`);
   }
 };
 
 export const addReference = async (req, res) => {
   const { reference_name, name } = req.body;
-  console.log(req.file.path);
+
+  console.log(req.file);
 
   if (!req.file) {
-    return res.send("Input image is not found!");
+    return res.status(404).send("Input image is not found!");
   }
 
   if (!name || !reference_name) {
-    return res.send("All field must be filled!");
+    return res.status(404).send("All field must be filled!");
   }
 
-  const upload = "uploads/" + req.file.filename;
+  const blob = bucket.file(req.file.originalname.replace("", `freshsnap-${Date.now()}`));
+  const blobStream = blob.createWriteStream();
+
+  const upload = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
   try {
     await References.create({
       reference_name: reference_name,
       name: name,
       image: upload,
     });
-    return res.json({ msg: "New reference has been created!" });
+    return new Promise((resolve, reject) => {
+      streamifier
+        .createReadStream(req.file.buffer)
+        .on("error", (err) => {
+          return reject(err);
+        })
+        .pipe(blobStream)
+        .on("finish", (resp) => {
+          res.status(201).send("New reference has been created!");
+        });
+    });
   } catch (error) {
-    console.log(error);
+    res.status(500).send(`Error, ${error}`);
   }
 };
 
@@ -51,7 +66,7 @@ export const deleteReference = async (req, res) => {
   }
 
   try {
-    await fs.unlinkSync(path.join(`public/${findReference.image}`));
+    // await fs.unlinkSync(path.join(`public/${findReference.image}`));
     await References.destroy({
       where: {
         id: req.params.id,

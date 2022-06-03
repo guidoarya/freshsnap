@@ -92,7 +92,6 @@ export const Register = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { name, email, password } = req.body;
 
-  console.log(req.file.filename);
   try {
     if (req.file) {
       const upload = "uploads/" + req.file.filename;
@@ -145,7 +144,7 @@ export const Login = async (req, res) => {
         email: email,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "10s" }
+      { expiresIn: "1d" }
     );
     res.cookie("jwt", token, {
       httpOnly: true,

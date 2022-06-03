@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "winter-quanta-351315",
+    "private_key_id": "fd70508a5677d6be52743dca56a14687c0de7d2f",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGMhwjuEA14qfQ\nOpQd8+yxTShrxJpc6x7bz014IySefAbejMgIXbZtTyLExnkEFaF2ftyqnduv7taL\n484/ub82eqUr/+d1fjGXR7rzG5Fayrsl+Ik/fGk96wTihPNM5XtQMORAVxvCGZEy\neQcRVQU8GBey+lNHRDdY7PsFIsYPVVQcwe2l01xI8ILfdLoNGt/VitvKlZ5AMP7M\nnAOz/wVsKxKWMu8cybvSUttN+jXYazhqWdzkDMBo0TPs6GIf1p6nGFUBviCyj83e\nyXnIzpCMjW38rW7cRGm641QAdqCHiSu71qtl/gpvxX6NyWV7wmA06UI4D7DZHE8/\nK//peEtZAgMBAAECggEABFnuSeR42GtY/CvaZkvy1YkC9awT0tgV+IUfx3RHZgla\nt0Ec/9Na4Xcm0BjRaFhh5UbvaPmH7LVlgB2+Ffe/LcmEiHzuTniOSyrNJ8WNAT1z\n3WdhpVisZipw6YOPZI/3OfFQ2Y7FXRNln4I5DarcWg+SBEvAT09n7au07nhvI8AA\nX5cSBi69q7Lprlfedpn1YKKZHwkvQYQhgYPCzzh6oNOvff0En4JvdTlNvShBpE7C\nj45DJXj+kdDs5SzRXhaqTq+0Dt/5dQo2HWfFwxwSfyN8u9GIoP/YdYXngHwCYGn0\nzjFBqWIyg8NmWwkB5d4HAwDX90jqit0gydFR7uSYmQKBgQD9uzo4EU/aNZhQv6Aq\nHgGTw+rv8qcpeerZi7TI6LQMKSS/WPJMBMjPGvJEVTcBr3lrNXg0xdRsSVJkIZXh\n4YjraKb3ZuTcAxPKms3++idR4QKMMR1aTWysFPT5NnTnqk4sO/Jdprj++0bHJ9j0\nWU+YYV1odZOm8jnmht3LdrNK9QKBgQDH98P5j4Outwwn0ZC/xUV8HunzUm+EKKAr\nizokljiGvokhRYYnszNP4SR1cL32DcUEsRKjZBaxoAPjrIiU5iMqazAz5d3dZjW8\nV8gHzTrP5+P7+/gk81fw4ib9GnSBqamvjnhrhi6OQ6uuCgmKc5B8Q2z0/RJLecIe\nauPhrT3IVQKBgQCLIP7rf5KptHmwzWKltY5n2CYbLJM8yv1cDJ81C2SuxmDAC6XQ\nyU7TQZNWpONkqTOK9ebUCSZRumLTRRdKpMDPVLM5NdKIUaeokPojtkeZPiiHducB\nfTL5qQQrIxE3dssmtjhP4fvO1ToaOl9cnRxoEfuGK/KquGfHYGx+BLiLgQKBgEex\nzIDIdLUKigAowdYP24bR6p1DvBnNGwghpdoCRggBflcAf0XymP4VwaWdo235p96z\nwfP06bILpflWHa4NCSSnQ6QH0VEU2UVKz7wEWAa8pF/vChvtZ2VFICd0+bqXYvA/\ni2s5s61sE7yVerA6GN6Eqib4KTwITpHrTwLVwyX1AoGBALjwKlx8AO4CfKJmBcBf\nM3zt09bY8SAQHAZhe7WehcRb80HdeVab/dA5m5yzX98lG64es62Aj33lRwttQjiW\nHhhkngT19NvxDCPEjBgxGIGE5d2lzmbyfeTrlg5Uq/SqAcm/6QU5qYyVeaGbMeub\n5pVtfGebWPMdC+eWkSH1DuO7\n-----END PRIVATE KEY-----\n",
+    "client_email": "freshsnap-admin@winter-quanta-351315.iam.gserviceaccount.com",
+    "client_id": "106069400490620367975",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/freshsnap-admin%40winter-quanta-351315.iam.gserviceaccount.com"
+  }

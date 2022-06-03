@@ -1,7 +1,22 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import MulterGoogleCloudStorage from "multer-cloud-storage";
 // import uuid from "uuid/v4";
+import { Storage } from "@google-cloud/storage";
+
+// CLOUD STORAGE UPLOAD
+export const uploadGoogleStorage = multer({
+  storage: multer.memoryStorage(),
+  fileSize: 5 * 1024 * 1024,
+});
+
+const cloudStorage = new Storage({
+  projectId: "winter-quanta-351315",
+  keyFilename: "google-cloud-key.json",
+});
+
+export const bucket = cloudStorage.bucket("freshsnap-image");
 
 const storageMultiple = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -32,7 +47,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const uploadSingle = multer({
+export const uploadSingle = multer({
   storage: storage,
   // limits: { fileSize: 1000000 },
   fileFilter: function (req, file, cb) {
@@ -55,6 +70,3 @@ function checkFileType(file, cb) {
     cb("Error: Images Only !!!");
   }
 }
-
-export default uploadSingle;
-// module.exports = { uploadMultiple, uploadSingle };

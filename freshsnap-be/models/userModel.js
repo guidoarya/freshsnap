@@ -23,9 +23,11 @@ const Users = db.define(
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue: "",
     },
     refresh_token: {
       type: DataTypes.TEXT,
+      defaultValue: "",
     },
   },
   {

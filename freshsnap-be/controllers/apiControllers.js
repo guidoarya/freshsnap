@@ -61,7 +61,7 @@ export const historyPage = async (req, res) => {
       where: {
         id_user: id,
       },
-      attributes: ["createdAt", "updatedAt"],
+      attributes: ["createdAt", "updatedAt", "location"],
     });
 
     const Item = await Item.findAll({
