@@ -1,5 +1,4 @@
 import History from "../models/historyModel.js";
-import Items from "../models/itemModel.js";
 
 export const getHistory = async (req, res) => {
   try {
@@ -27,7 +26,7 @@ export const addHistory = async (req, res) => {
       user_id: user_id,
       location: location,
     });
-    return res.json({ msg: "New history has been created!" });
+    return res.status(201).json({ msg: "New history has been created!" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: `Error, ${error}` });

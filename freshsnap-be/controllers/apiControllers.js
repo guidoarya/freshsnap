@@ -49,7 +49,6 @@ export const detail = async (req, res) => {
       Reference,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
