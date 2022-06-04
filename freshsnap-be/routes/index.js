@@ -5,7 +5,7 @@ import { uploadGoogleStorage, uploadSingle } from "../middlewares/multer.js";
 import { detail, historyPage, homePage } from "../controllers/apiControllers.js";
 import { addReference, deleteReference, getReference } from "../controllers/Reference.js";
 import Auth from "../middlewares/auth.js";
-import { addHistory, getHistory } from "../controllers/History.js";
+import { addHistory, deleteHistory, getHistory } from "../controllers/History.js";
 
 const router = express.Router();
 
@@ -16,10 +16,11 @@ router.delete("/item/:id", deleteItem);
 
 // User
 router.get("/user", Auth.verifyTokenUser, getUser);
-router.delete("/user", deleteUser);
+router.delete("/user/:id", deleteUser);
 router.get("/user/:id", Auth.verifyTokenUser, getSpecifyUser);
 router.post("/user", uploadSingle, Register);
 router.patch("/user/:id", uploadSingle, updateUser);
+
 router.post("/login", uploadSingle, Login);
 router.delete("/logout", Logout);
 
@@ -31,6 +32,7 @@ router.delete("/reference/:id", deleteReference);
 // History
 router.get("/history", Auth.verifyTokenUser, getHistory);
 router.post("/history", Auth.verifyTokenUser, uploadSingle, addHistory);
+router.post("/history/:id", Auth.verifyTokenUser, deleteHistory);
 
 // API Routes
 router.get("/home-page", homePage);

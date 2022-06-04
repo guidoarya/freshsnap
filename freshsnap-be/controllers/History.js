@@ -14,8 +14,6 @@ export const getHistory = async (req, res) => {
 export const addHistory = async (req, res) => {
   const { item_name, user_id, location } = req.body;
 
-  console.log(req.body);
-
   if (!item_name || !user_id) {
     return res.status(404).send("All field must be filled!");
   }
@@ -30,5 +28,29 @@ export const addHistory = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: `Error, ${error}` });
+  }
+};
+
+export const deleteHistory = async (req, res) => {
+  const findHistory = await History.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  if (!findHistory) {
+    return res.status(404).send("History is not found!");
+  }
+
+  try {
+    await History.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).send("History was deleted!");
+  } catch (err) {
+    res.status(500).send(`Error, ${error}`);
   }
 };

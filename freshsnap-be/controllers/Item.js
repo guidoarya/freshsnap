@@ -63,13 +63,18 @@ export const deleteItem = async (req, res) => {
     return res.status(404).send("Item is not found!");
   }
 
+  const imageName = findItem.image.substring(findItem.image.indexOf("e/") + 2);
+
   try {
-    // await fs.unlinkSync(path.join(`public/${findItem.image}`));
+    const file = bucket.file(`${imageName}`);
+    file.delete();
+
     await Items.destroy({
       where: {
         id: req.params.id,
       },
     });
+
     res.status(200).send("Item was deleted!");
   } catch (err) {
     res.status(500).send(`Error, ${error}`);

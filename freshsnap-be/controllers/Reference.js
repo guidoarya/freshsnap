@@ -65,8 +65,11 @@ export const deleteReference = async (req, res) => {
     return res.send("References is not found!");
   }
 
+  const imageName = findReference.image.substring(findReference.image.indexOf("e/") + 2);
   try {
-    // await fs.unlinkSync(path.join(`public/${findReference.image}`));
+    const file = bucket.file(`${imageName}`);
+    file.delete();
+
     await References.destroy({
       where: {
         id: req.params.id,
