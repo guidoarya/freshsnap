@@ -29,7 +29,7 @@ class ListVegetableAdapter (private val listVegetable: ArrayList<HomeResponse.Ve
         val modifyUrl = result.image
         holder.binding.vegetablesNameTv.text = result.name
         Glide.with(holder.itemView)
-            .load("http://172.168.1.103:5000/$modifyUrl")
+            .load("http://192.168.0.22:5000/$modifyUrl")
             .into(holder.binding.vegetablesImage)
         holder.itemView.setOnClickListener{
             onItemClickCallback.onItemClicked(listVegetable[holder.adapterPosition])

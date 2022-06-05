@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    "Permission Denied",
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
+
 
     companion object {
         const val CAMERA_X_RESULT = 200

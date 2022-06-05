@@ -23,7 +23,7 @@ class ListRecipeAdapter(private val listRecipe: ArrayList<DetailResponse.Referen
         val modify = result.image
         holder.binding.recipeNameTv.text = result.referenceName
         Glide.with(holder.itemView)
-            .load("http://172.168.1.103:5000/$modify")
+            .load("http://192.168.0.22:5000/$modify")
             .into(holder.binding.recipeImage)
     }
 

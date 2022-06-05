@@ -29,7 +29,7 @@ class ListFruitAdapter(private val listFruit: ArrayList<HomeResponse.FruitsItem>
         val modifyUrl = result.image
         holder.binding.fruitNameTv.text = result.name
         Glide.with(holder.itemView)
-            .load("http://172.168.1.103:5000/$modifyUrl")
+            .load("http://192.168.0.22:5000/$modifyUrl")
             .into(holder.binding.fruitImage)
         holder.itemView.setOnClickListener{
             onItemClickCallback.onItemClicked(listFruit[holder.adapterPosition])

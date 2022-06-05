@@ -84,7 +84,7 @@ class DetailFragment : Fragment() {
             val howto = arguments?.getString(EXTRA_HOW).toString()
             with(binding) {
                 Glide.with(binding.imageView)
-                    .load("http://172.168.1.103:5000/$image")
+                    .load("http://192.168.0.22:5000/$image")
                     .into(imageView)
                 tvType.text = name
                 tvHowto.text = howto
