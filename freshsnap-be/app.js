@@ -3,10 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import db from "./config/database.js";
 import router from "./routes/index.js";
-// import router from "./middlewares/multerCs.js";
 import cors from "cors";
 import bodyParser from "body-parser";
-import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -27,20 +25,13 @@ try {
   console.log(err);
 }
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 
-// const upload = multer({ storage: diskStorage, fileFilter: imgFilter, limits: { fieldSize: 10 * 1024 * 1024 } });
-
-// app.use(upload.single("dummy_picture", "profilePict"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   try {
-    res.send(`Welcome to API Page for Kasbaik Backend for Users `);
+    res.send(`Welcome to API Page of Freshsnap`);
   } catch (error) {
     console.log(error);
   }

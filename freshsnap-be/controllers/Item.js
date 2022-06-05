@@ -1,6 +1,4 @@
 import Items from "../models/itemModel.js";
-import fs from "fs";
-import path from "path";
 import { bucket } from "../middlewares/multer.js";
 import streamifier from "streamifier";
 

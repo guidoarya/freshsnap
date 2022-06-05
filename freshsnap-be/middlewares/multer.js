@@ -1,8 +1,6 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import MulterGoogleCloudStorage from "multer-cloud-storage";
-// import uuid from "uuid/v4";
 import { Storage } from "@google-cloud/storage";
 
 // CLOUD STORAGE UPLOAD

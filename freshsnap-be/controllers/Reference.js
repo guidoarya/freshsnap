@@ -1,6 +1,4 @@
 import References from "../models/referenceModel.js";
-import fs from "fs";
-import path from "path";
 import { bucket } from "../middlewares/multer.js";
 import streamifier from "streamifier";
 

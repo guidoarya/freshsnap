@@ -1,7 +1,4 @@
 import Users from "../models/userModel.js";
-import { Sequelize } from "sequelize";
-import fs from "fs";
-import path from "path";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
