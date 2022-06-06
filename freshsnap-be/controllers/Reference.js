@@ -26,7 +26,7 @@ export const addReference = async (req, res) => {
     return res.status(404).send("All field must be filled!");
   }
 
-  const blob = bucket.file(req.file.originalname.replace("", `freshsnap-${Date.now()}`));
+  const blob = bucket.file(req.file.originalname.replace("", `freshsnapRef-${Date.now()}`));
   const blobStream = blob.createWriteStream();
 
   const upload = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;

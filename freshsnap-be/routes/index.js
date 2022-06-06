@@ -31,7 +31,7 @@ router.delete("/reference/:id", deleteReference);
 
 // History
 router.get("/history", Auth.verifyTokenUser, getHistory);
-router.post("/history", Auth.verifyTokenUser, uploadSingle, addHistory);
+router.post("/history", Auth.verifyTokenUser, uploadGoogleStorage.single("image"), addHistory);
 router.post("/history/:id", Auth.verifyTokenUser, deleteHistory);
 
 // API Routes

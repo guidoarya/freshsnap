@@ -12,15 +12,19 @@ const History = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    user_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     item_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     location: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
+    image: {
       type: DataTypes.STRING,
       defaultValue: "",
     },

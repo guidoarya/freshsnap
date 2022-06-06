@@ -3,6 +3,12 @@ import { bucket } from "../middlewares/multer.js";
 import streamifier from "streamifier";
 
 export const getItem = async (req, res) => {
+  let fresh = "freshbanana";
+  let rotten = "rottenbanana";
+
+  console.log(fresh.substring(fresh.indexOf("h") + 1));
+  console.log(rotten.substring(rotten.indexOf("n") + 1));
+
   try {
     const item = await Items.findAll({
       attributes: ["id", "name", "type", "image", "howtokeep"],

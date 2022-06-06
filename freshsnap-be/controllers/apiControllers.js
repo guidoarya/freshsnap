@@ -55,24 +55,12 @@ export const detail = async (req, res) => {
 
 export const historyPage = async (req, res) => {
   try {
-    const id = req.params.id;
     const HistoryDetail = await History.findAll({
-      where: {
-        id_user: id,
-      },
-      attributes: ["createdAt", "updatedAt", "location"],
-    });
-
-    const Item = await Item.findAll({
-      where: {
-        name: HistoryDetail.item_name,
-      },
-      attributes: ["name", "image", "type"],
+      attributes: ["id", "user_name", "item_name", "location", "image", "createdAt"],
     });
 
     res.status(200).json({
       HistoryDetail,
-      Item,
     });
   } catch (error) {
     res.status(500).send(`Error, ${error}`);
