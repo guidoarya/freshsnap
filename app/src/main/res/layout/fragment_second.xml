@@ -7,12 +7,14 @@
     tools:context="ui.IdentifyFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
         android:layout_margin="70dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toTopOf="@id/cameraButton"
+
+        app:layout_constraintBottom_toTopOf="@+id/chooseButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,28 +36,15 @@
 
 
     <Button
-        android:id="@+id/cameraButton"
+        android:id="@+id/chooseButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginBottom="180dp"
-        android:text="@string/camera"
+        android:layout_marginBottom="76dp"
+        android:text="@string/choose_image"
         app:layout_constraintBottom_toTopOf="@+id/uploadButton"
-        app:layout_constraintEnd_toStartOf="@+id/galleryButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/galleryButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin = "16dp"
-        android:text="@string/gallery"
-        app:layout_constraintBottom_toBottomOf="@+id/cameraButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cameraButton"
-        app:layout_constraintTop_toTopOf="@+id/cameraButton" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/uploadButton"
@@ -74,32 +63,51 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Predict"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progress_percentage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/uploadButton" />
 
+    <ProgressBar
+        android:id="@+id/progress_percentage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintBottom_toTopOf="@id/result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonPredict"
+        tools:progress="0" />
+
     <TextView
         android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPredict"
-        app:layout_constraintVertical_bias="0.288" />
+        android:text="0%"
+        android:textColor="@color/green_primary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/progress_percentage"
+        app:layout_constraintStart_toStartOf="@id/progress_percentage"
+        app:layout_constraintTop_toTopOf="@+id/progress_percentage"
+        app:layout_constraintBottom_toBottomOf="@id/progress_percentage" />
 
     <TextView
-        android:id="@+id/textViewResult2"
+        android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_centerHorizontal="true"
+        android:text="Fresh or Rotten"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewResult" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_percentage" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

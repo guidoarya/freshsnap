@@ -2,9 +2,8 @@ package com.daniel.android_freshsnap.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,27 +11,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PermissionChecker.checkSelfPermission
-import com.daniel.android_freshsnap.ui.MainActivity.Companion.CAMERA_X_RESULT
 import com.daniel.android_freshsnap.R
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
+import com.daniel.android_freshsnap.databinding.PopupChooseImageSourceBinding
 import com.daniel.android_freshsnap.ml.ModelFreshsnap
-import com.daniel.android_freshsnap.utils.*
-import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 
 class IdentifyFragment : Fragment() {
 
     private lateinit var binding : FragmentSecondBinding
     lateinit var bitmap : Bitmap
+    private var progr = 0
+    private var imageSize = 150
     private var currentFile: File? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,10 +48,34 @@ class IdentifyFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
-        binding.cameraButton.setOnClickListener { startCameraX() }
-        binding.galleryButton.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
-        binding.buttonPredict.setOnClickListener{ predictImage()}
+        setupPopupMenu()
+    }
+
+    private fun setupPopupMenu() {
+        val popupBinding = PopupChooseImageSourceBinding.inflate(layoutInflater)
+        val popupWindow = PopupWindow(
+            popupBinding.root,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            isFocusable = true
+            elevation = 10F
+        }
+
+        popupBinding.btnCamera.setOnClickListener {
+            startCameraX()
+            popupWindow.dismiss()
+        }
+
+        popupBinding.btnGallery.setOnClickListener {
+            startGallery()
+            popupWindow.dismiss()
+        }
+
+        binding.chooseButton.setOnClickListener { btn ->
+            popupWindow.showAsDropDown(btn)
+        }
     }
 
     private fun uploadImage() {
@@ -65,115 +89,102 @@ class IdentifyFragment : Fragment() {
         }
     }
 
-    private fun predictImage(){
+    private fun predictImage(image: Bitmap){
         val fileName = "label_ml_freshsnap.txt"
         val app = requireActivity().application
         val inputString = app.assets.open(fileName).bufferedReader().use { it.readText() }
-        val townList = inputString.split("\n")
+        val itemList = inputString.split("\n")
 
-        val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, true)
         val model = ModelFreshsnap.newInstance(requireContext())
 
         // Creates inputs for reference.
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 150, 150, 3), DataType.FLOAT32)
+        val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
+        byteBuffer.order(ByteOrder.nativeOrder())
 
-        val tensorImage = TensorImage(DataType.FLOAT32)
-        tensorImage.load(resized)
-        val byteBuffer = tensorImage.buffer
+        // get 1D array of 224 * 224 pixels in image
+        val intValues = IntArray(imageSize * imageSize)
+        image.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
+
+        // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
+        var pixel = 0
+        for (i in 0 until imageSize) {
+            for (j in 0 until imageSize) {
+                val `val` = intValues[pixel++] // RGB
+                byteBuffer.putFloat((`val` shr 16 and 0xFF) * (1f / 255f))
+                byteBuffer.putFloat((`val` shr 8 and 0xFF) * (1f / 255f))
+                byteBuffer.putFloat((`val` and 0xFF) * (1f / 255f))
+            }
+        }
         inputFeature0.loadBuffer(byteBuffer)
 
-
         // Runs model inference and gets result.
-        val outputs = model.process(inputFeature0)
-        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+        val outputs: ModelFreshsnap.Outputs = model.process(inputFeature0)
+        val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
+        val confidences = outputFeature0.floatArray
+        // find the index of the class with the biggest confidence.
+        var maxPos = 0
+        var maxConfidence = 0f
+        for (i in confidences.indices) {
+            if (confidences[i] > maxConfidence) {
+                maxConfidence = confidences[i]
+                maxPos = i
+            }
+        }
 
-        val max = getMax(outputFeature0.floatArray)
+        val output = String.format("%s", itemList[maxPos])
 
-        binding.textViewResult.setText(townList[max])
-        binding.textViewResult2.setText(outputFeature0.floatArray[max].toString())
-
+        progr = (confidences[maxPos] * 100).toInt()
+        updateProgressBar()
+        binding.result.text = output
 
         // Releases model resources if no longer used.
         model.close()
     }
 
+    private fun updateProgressBar(){
+        binding.progressPercentage.progress = progr
+        binding.textViewResult.text = "$progr%"
+    }
+
     private fun startGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-
         startActivityForResult(intent, 250)
     }
 
     private fun startCameraX() {
-        //launcherIntentCameraX.launch(Intent(requireContext(), CameraActivity::class.java))
-        var camera : Intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(camera, 200)
-    }
-
-    private val launcherIntentCameraX = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == CAMERA_X_RESULT) {
-            val myFile = it.data?.getSerializableExtra("picture") as File
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
-            val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path),
-                isBackCamera
-            )
-            binding.previewImageView.setImageBitmap(result)
-        }
-    }
-
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == AppCompatActivity.RESULT_OK) {
-            currentFile = Utils.uriToFile(it.data?.data as Uri, requireContext())
-            binding.previewImageView.setImageURI(Uri.fromFile(currentFile))
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        //binding.previewImageView.setImageURI(data?.data)
+        if(requestCode == 250 && data != null){
+            binding.previewImageView.setImageURI(data.data)
 
-        //val resolver = requireActivity().contentResolver
-
-        val uri:Uri ?= data?.data
-
-
-        //bitmap = MediaStore.Images.Media.getBitmap(resolver, uri)
-
-        if(requestCode == 250){
-            binding.previewImageView.setImageURI(data?.data)
-
-            var uri : Uri ?= data?.data
+            val uri : Uri ?= data.data
 
             val resolver = requireActivity().contentResolver
 
             bitmap = MediaStore.Images.Media.getBitmap(resolver, uri)
-        }
-        else if(requestCode == 200 && resultCode == Activity.RESULT_OK){
-            bitmap = data?.extras?.get("data") as Bitmap
-            binding.previewImageView.setImageBitmap(bitmap)
-        }
-    }
 
-    fun getMax(arr:FloatArray) : Int{
-
-        var ind = 0
-        var min = 0.0f
-
-        for(i in 0..19)
-        {
-            if(arr[i]>min)
-            {
-                ind = i
-                min = arr[i]
+            val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, true)
+            binding.buttonPredict.setOnClickListener{
+                predictImage(image)
             }
         }
-
-        return ind
+        else if(requestCode == 200 && resultCode == Activity.RESULT_OK){
+            var image = data!!.extras!!["data"] as Bitmap?
+            val dimension = image!!.width.coerceAtMost(image.height)
+            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
+            binding.previewImageView.setImageBitmap(image)
+            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, true)
+            binding.buttonPredict.setOnClickListener{
+                predictImage(image)
+            }
+        }
     }
+
 }
