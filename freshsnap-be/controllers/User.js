@@ -154,6 +154,13 @@ export const Login = async (req, res) => {
   }
 };
 
+export const getLogin = async (req, res) => {
+  res.status(404).json({
+    error: true,
+    msg: "Eror, this endpoint is only available for post method",
+  });
+};
+
 export const Logout = async (req, res) => {
   try {
     const token = null;

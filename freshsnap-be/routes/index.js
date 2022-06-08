@@ -1,6 +1,15 @@
 import express from "express";
 import { getItem, addItem, deleteItem } from "../controllers/Item.js";
-import { getUser, Register, updateUser, Login, Logout, getSpecifyUser, deleteUser } from "../controllers/User.js";
+import {
+  getUser,
+  Register,
+  updateUser,
+  Login,
+  Logout,
+  getSpecifyUser,
+  deleteUser,
+  getLogin,
+} from "../controllers/User.js";
 import { uploadGoogleStorage, uploadSingle } from "../middlewares/multer.js";
 import { detail, historyPage, homePage } from "../controllers/apiControllers.js";
 import { addReference, deleteReference, getReference } from "../controllers/Reference.js";
@@ -22,6 +31,7 @@ router.post("/user", uploadSingle, Register);
 router.patch("/user/:id", uploadSingle, updateUser);
 
 router.post("/login", uploadSingle, Login);
+router.get("/login", getLogin);
 router.delete("/logout", Logout);
 
 // Reference

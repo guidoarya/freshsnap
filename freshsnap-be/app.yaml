@@ -1,1 +1,3 @@
 runtime: nodejs16
+env_variables:
+  ACCESS_TOKEN_SECRET: "sddfsifdsjsaduasjdinasnjdaji23423fdsf32143fds"
