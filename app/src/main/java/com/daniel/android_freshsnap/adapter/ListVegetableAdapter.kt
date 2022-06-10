@@ -26,10 +26,9 @@ class ListVegetableAdapter (private val listVegetable: ArrayList<HomeResponse.Ve
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val result = listVegetable[position]
-        val modifyUrl = result.image
         holder.binding.vegetablesNameTv.text = result.name
         Glide.with(holder.itemView)
-            .load("http://192.168.0.22:5000/$modifyUrl")
+            .load(result.image)
             .into(holder.binding.vegetablesImage)
         holder.itemView.setOnClickListener{
             onItemClickCallback.onItemClicked(listVegetable[holder.adapterPosition])

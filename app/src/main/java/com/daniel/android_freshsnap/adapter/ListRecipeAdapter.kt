@@ -20,10 +20,9 @@ class ListRecipeAdapter(private val listRecipe: ArrayList<DetailResponse.Referen
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val result = listRecipe[position]
-        val modify = result.image
         holder.binding.recipeNameTv.text = result.referenceName
         Glide.with(holder.itemView)
-            .load("http://192.168.0.22:5000/$modify")
+            .load(result.image)
             .into(holder.binding.recipeImage)
     }
 

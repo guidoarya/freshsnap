@@ -1,5 +1,5 @@
 package com.example.storyapp.stories
-
+/*
 import androidx.recyclerview.widget.DiffUtil
 import com.daniel.android_freshsnap.data.Fruits
 
@@ -19,4 +19,4 @@ class HistoryDiffUtils(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldList[oldItemPosition] == newList[newItemPosition]
-}
+}*/

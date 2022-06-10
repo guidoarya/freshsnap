@@ -1,24 +1,45 @@
 package com.daniel.android_freshsnap.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.daniel.android_freshsnap.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.daniel.android_freshsnap.adapter.ListHowToAdapter
+import com.daniel.android_freshsnap.adapter.ListRecipeAdapter
+import com.daniel.android_freshsnap.api.ApiConfig
+import com.daniel.android_freshsnap.api.response.DetailResponse
+import com.daniel.android_freshsnap.api.response.ReviewResponse
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
 import com.daniel.android_freshsnap.databinding.PopupChooseImageSourceBinding
 import com.daniel.android_freshsnap.ml.ModelFreshsnap
+import com.daniel.android_freshsnap.utils.Utils
+import com.daniel.android_freshsnap.utils.Utils.uriToFile
+import com.daniel.android_freshsnap.viewmodel.DetailViewModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -27,11 +48,18 @@ import java.nio.ByteOrder
 class IdentifyFragment : Fragment() {
 
     private lateinit var binding : FragmentSecondBinding
+    private lateinit var rvRecipe: RecyclerView
+    private lateinit var listRecipeAdapter: ListRecipeAdapter
+    private lateinit var userPreferences: SharedPreferences
+    private lateinit var rvHowTo: RecyclerView
+    private lateinit var listHowToAdapter: ListHowToAdapter
+
+    private lateinit var detailViewModel: DetailViewModel
+
     lateinit var bitmap : Bitmap
     private var progr = 0
     private var imageSize = 150
     private var currentFile: File? = null
-
 
 
     override fun onCreateView(
@@ -48,8 +76,80 @@ class IdentifyFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
-        binding.uploadButton.setOnClickListener { uploadImage() }
+
+        rvRecipe = binding.rvRecipe
+        binding.rvRecipe.setHasFixedSize(true)
+
+        showRecyclerListRecipe()
+        showRecyclerListHowTo()
+
+        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        detailViewModel.listDetail.observe(viewLifecycleOwner) {
+            if (it !=null){
+                listHowToAdapter.setHowTo(it)
+            }
+        }
+
+        detailViewModel.listRecipe.observe(viewLifecycleOwner){
+            if (it !=null){
+                listRecipeAdapter.setDetail(it)
+                showLoading(false)
+            }
+        }
+
+        detailViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+        binding.shareBtn.setOnClickListener {
+            uploadImage()
+            showLoading(true)
+        }
         setupPopupMenu()
+    }
+
+    private fun uploadImage() {
+        if (currentFile != null){
+
+            val file = currentFile as File
+            userPreferences = this.requireActivity().getSharedPreferences(LoginActivity.PREFS_USER, Context.MODE_PRIVATE)
+            val location = binding.edtLoc.text.toString().toRequestBody()
+            val email = userPreferences.getString(LoginActivity.EMAIL, "").toString()
+            val password = userPreferences.getString(LoginActivity.PASSWORD, "").toString()
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
+
+            val service = ApiConfig.getApiService().upload(imageMultipart, location)
+            service.enqueue(object : Callback<ReviewResponse> {
+                override fun onResponse(
+                    call: Call<ReviewResponse>,
+                    response: Response<ReviewResponse>
+                ) {
+                    if (response.isSuccessful){
+                        val responseBody =  response.body()
+                        if (responseBody != null){
+                            Log.d(TAG, response.body().toString())
+                            Toast.makeText(requireActivity(), "Sukses", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Log.e(TAG, "onFailure : ${response.message()}")
+                        Toast.makeText(requireActivity(), "Coba lagi", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                    Log.e(TAG, "onFailure: ${t.message}")
+                    Toast.makeText(requireActivity(), "Gagal", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
+        }else{
+            Toast.makeText(requireActivity(), "Silahkan masukkan berkas dahulu", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupPopupMenu() {
@@ -78,14 +178,21 @@ class IdentifyFragment : Fragment() {
         }
     }
 
-    private fun uploadImage() {
-        val mDetailPercentFragment = DetailPercentFragment()
-        val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment, mDetailPercentFragment, DetailPercentFragment::class.java.simpleName)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-            commit()
+    private fun showRecyclerListRecipe() {
+        listRecipeAdapter = ListRecipeAdapter(arrayListOf())
+        rvRecipe = binding.rvRecipe
+        rvRecipe.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = listRecipeAdapter
+        }
+    }
+
+    private fun showRecyclerListHowTo() {
+        listHowToAdapter = ListHowToAdapter(arrayListOf())
+        rvHowTo = binding.rvHowToKeep
+        rvHowTo.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            adapter = listHowToAdapter
         }
     }
 
@@ -132,7 +239,10 @@ class IdentifyFragment : Fragment() {
             }
         }
 
+
         val output = String.format("%s", itemList[maxPos])
+
+        setUser(output)
 
         progr = (confidences[maxPos] * 100).toInt()
         updateProgressBar()
@@ -142,22 +252,86 @@ class IdentifyFragment : Fragment() {
         model.close()
     }
 
+    private fun setUser(output: String) {
+        when {("Fresh Apples" in output) || ("Rotten Apples" in output)
+        ->
+            setIdentify(output = 43)
+        }
+        when {("Fresh Banana" in output) || ("Rotten Banana" in output)
+        ->
+            setIdentify(output = 44)
+        }
+        when {("Fresh Cucumber" in output) || ("Rotten Cucumber" in output)
+        ->
+            setIdentify(output = 45)
+        }
+        when {("Fresh Guava" in output) || ("Rotten Guava" in output)
+        ->
+            setIdentify(output = 46)
+        }
+        when {("Fresh Lime" in output) || ("Rotten Lime" in output)
+        ->
+            setIdentify(output = 47)
+        }
+        when {("Fresh Okra" in output) || ("Rotten Okra" in output)
+        ->
+            setIdentify(output = 48)
+        }
+        when {("Fresh Orange" in output) || ("Rotten Orange" in output)
+        ->
+            setIdentify(output = 49)
+        }
+        when {("Fresh Pomegranate" in output) || ("Rotten Pomegranate" in output)
+        ->
+            setIdentify(output = 50)
+        }
+        when {("Fresh Potato" in output) || ("Rotten Potato" in output)
+        ->
+            setIdentify(output = 51)
+        }
+        when {("Fresh Tomato" in output) || ("Rotten Tomato" in output)
+        ->
+            setIdentify(output = 52)
+        }
+    }
+
+    private fun setIdentify(output: Int?){
+        detailViewModel.findDetail(output)
+    }
+
     private fun updateProgressBar(){
         binding.progressPercentage.progress = progr
         binding.textViewResult.text = "$progr%"
     }
 
+    private fun show(isLoad: Boolean) {
+        binding.percent.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.vector3.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.progressPercentage.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.textViewResult.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.result.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.tips.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.vector2.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.rvHowToKeep.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.recipe.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.vector1.visibility = if (isLoad) View.VISIBLE else View.GONE
+        binding.rvRecipe.visibility = if (isLoad) View.VISIBLE else View.GONE
+    }
+
     private fun startGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
+
         startActivityForResult(intent, 250)
     }
 
     private fun startCameraX() {
         val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
         startActivityForResult(camera, 200)
     }
 
+    private lateinit var currentPhotoPath: String
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -166,25 +340,46 @@ class IdentifyFragment : Fragment() {
 
             val uri : Uri ?= data.data
 
+            val myFile = uriToFile(data?.data as Uri, requireContext())
+
+            currentFile = myFile
+
             val resolver = requireActivity().contentResolver
 
             bitmap = MediaStore.Images.Media.getBitmap(resolver, uri)
 
             val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, true)
-            binding.buttonPredict.setOnClickListener{
+            binding.process.setOnClickListener{
                 predictImage(image)
+                show(true)
             }
         }
         else if(requestCode == 200 && resultCode == Activity.RESULT_OK){
             var image = data!!.extras!!["data"] as Bitmap?
             val dimension = image!!.width.coerceAtMost(image.height)
             image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
+            val myFile = File(currentPhotoPath)
+            currentFile = myFile
+
             binding.previewImageView.setImageBitmap(image)
             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, true)
-            binding.buttonPredict.setOnClickListener{
+            binding.process.setOnClickListener{
                 predictImage(image)
+                show(true)
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    companion object{
+        var TAG = "IdentifyFragment"
     }
 
 }

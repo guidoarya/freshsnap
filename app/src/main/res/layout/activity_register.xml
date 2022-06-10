@@ -70,6 +70,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/corners_outline"
         android:drawableStart="@drawable/ic_lock"
+        android:inputType="textPassword"
         android:drawablePadding="8dp"
         android:paddingHorizontal="8dp"
         android:paddingVertical="8dp"

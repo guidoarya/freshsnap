@@ -84,10 +84,24 @@ class DetailFragment : Fragment() {
             val howto = arguments?.getString(EXTRA_HOW).toString()
             with(binding) {
                 Glide.with(binding.imageView)
-                    .load("http://192.168.0.22:5000/$image")
+                    .load(image)
                     .into(imageView)
                 tvType.text = name
-                tvHowto.text = howto
+
+                var howToList = howto
+                val strings = howToList.split(",").toTypedArray()
+
+                for (i in strings.indices) {
+                    strings[i] = strings[i].trim { it <= ' ' }
+                    strings[i] += "\n"
+                }
+                howToList = ""
+
+                for (i in strings.indices) {
+                    howToList += String.format("%s. %s",i+1,strings[i])
+                }
+
+                tvHowto.text = howToList
             }
         }
     }

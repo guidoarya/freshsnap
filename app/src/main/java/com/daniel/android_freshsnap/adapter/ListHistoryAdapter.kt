@@ -1,5 +1,5 @@
 package com.daniel.android_freshsnap.adapter
-
+/*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -40,4 +40,4 @@ class ListHistoryAdapter(private val listFruit: ArrayList<Fruits>): RecyclerView
         oldStoryItem = newStoryItem
         diffResult.dispatchUpdatesTo(this)
     }
-}
+}*/

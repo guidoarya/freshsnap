@@ -49,6 +49,16 @@
         app:layout_constraintStart_toStartOf="@id/edt_email"
         app:layout_constraintTop_toBottomOf="@id/edt_email" />
 
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/remember"
+        android:buttonTint="@color/green_primary"
+        app:layout_constraintStart_toStartOf="@+id/edt_password"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="150dp"

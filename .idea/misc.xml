@@ -3,13 +3,46 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/bg_button.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/circle.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/corners_outline.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_date.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_identify.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_location.xml" value="0.126" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_camera.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_capture.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_email.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_exit.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_gallery.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_image_background.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_image_search.xml" value="0.126" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_lock.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_separator.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_switch_camera.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_user.xml" value="0.1425" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/menu_background_rounded.xml" value="0.1425" />
         <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_camera.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_login.xml" value="0.10666666666666667" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_detail.xml" value="0.17395833333333333" />
         <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_detail_percent.xml" value="0.17395833333333333" />
         <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_first.xml" value="0.1453125" />
-        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_third.xml" value="0.1" />
-        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/history_row.xml" value="0.1" />
-        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/recipe.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_second.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_third.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fruit_layout.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/history_row.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/how_to_keep.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/popup_choose_image_source.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/recipe.xml" value="0.6" />
+        <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/vegetable_layout.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/bg_button.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/circle.xml" value="0.121" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_camera.xml" value="0.11" />

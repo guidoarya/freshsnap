@@ -14,8 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/corners_outline_detail"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/img_photo"
@@ -29,35 +28,70 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.781" />
+            />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:text="@string/orange"
+            android:layout_marginStart="16dp"
+            android:paddingTop="8dp"
+            android:text="@string/fresh_orange"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/img_photo"
             app:layout_constraintStart_toEndOf="@id/img_photo"
-            app:layout_constraintTop_toTopOf="@id/img_photo"
-            app:layout_constraintVertical_bias="0.152" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.065" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="14dp"
-            android:text="@string/date"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawablePadding="8dp"
+            android:text="@string/username"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@id/name"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/img_photo"
             app:layout_constraintTop_toBottomOf="@id/name" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_date"
+            android:drawablePadding="8dp"
+            android:text="2022-05-25 09.12.11"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/username"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/img_photo"
+            app:layout_constraintTop_toBottomOf="@id/username" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_location"
+            android:drawablePadding="8dp"
+            android:text="@string/place"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/date"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/img_photo"
+            app:layout_constraintTop_toBottomOf="@id/date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

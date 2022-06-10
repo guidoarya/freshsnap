@@ -9,52 +9,53 @@ data class HomeResponse(
 
 	@field:SerializedName("Fruits")
 	val fruits: List<FruitsItem>
-){
+) {
 
-data class FruitsItem(
+	data class VegetablesItem(
 
-	@field:SerializedName("image")
-	val image: String,
+		@field:SerializedName("image")
+		val image: String,
 
-	@field:SerializedName("createdAt")
-	val createdAt: String,
+		@field:SerializedName("createdAt")
+		val createdAt: String,
 
-	@field:SerializedName("howtokeep")
-	val howtokeep: String,
+		@field:SerializedName("howtokeep")
+		val howtokeep: String,
 
-	@field:SerializedName("name")
-	val name: String,
+		@field:SerializedName("name")
+		val name: String,
 
-	@field:SerializedName("id")
-	val id: Int,
+		@field:SerializedName("id")
+		val id: Int,
 
-	@field:SerializedName("type")
-	val type: String,
+		@field:SerializedName("type")
+		val type: String,
 
-	@field:SerializedName("updatedAt")
-	val updatedAt: String
-)
+		@field:SerializedName("updatedAt")
+		val updatedAt: String
+	)
 
-data class VegetablesItem(
+	data class FruitsItem(
 
-	@field:SerializedName("image")
-	val image: String,
+		@field:SerializedName("image")
+		val image: String,
 
-	@field:SerializedName("createdAt")
-	val createdAt: String,
+		@field:SerializedName("createdAt")
+		val createdAt: String,
 
-	@field:SerializedName("howtokeep")
-	val howtokeep: String,
+		@field:SerializedName("howtokeep")
+		val howtokeep: String,
 
-	@field:SerializedName("name")
-	val name: String,
+		@field:SerializedName("name")
+		val name: String,
 
-	@field:SerializedName("id")
-	val id: Int,
+		@field:SerializedName("id")
+		val id: Int,
 
-	@field:SerializedName("type")
-	val type: String,
+		@field:SerializedName("type")
+		val type: String,
 
-	@field:SerializedName("updatedAt")
-	val updatedAt: String
-)}
+		@field:SerializedName("updatedAt")
+		val updatedAt: String
+	)
+}

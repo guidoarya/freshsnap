@@ -12,6 +12,7 @@ import retrofit2.Response
 
 class DetailViewModel : ViewModel(){
     private val _detail = MutableLiveData<List<DetailResponse.DetailItem>>()
+    val listDetail: LiveData<List<DetailResponse.DetailItem>> = _detail
 
     private val _recipe = MutableLiveData<List<DetailResponse.ReferenceItem>>()
     val listRecipe: LiveData<List<DetailResponse.ReferenceItem>> = _recipe
@@ -25,14 +26,14 @@ class DetailViewModel : ViewModel(){
         client.enqueue(object : Callback<DetailResponse> {
             override fun onResponse(
                 call: Call<DetailResponse>,
-                response: Response<DetailResponse>
+                response: Response<DetailResponse>,
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         Log.d(TAG, response.body().toString())
-                        _detail.value = response.body()?.detail
+                        _detail.value = response.body()!!.detail
                         _recipe.value = response.body()?.reference
                     }
                 } else {
