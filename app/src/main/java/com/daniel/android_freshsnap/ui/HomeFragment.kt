@@ -58,14 +58,14 @@ class HomeFragment : Fragment() {
         homeViewModel.listFruits.observe(viewLifecycleOwner) {
             if (it != null) {
                 listFruitAdapter.setFruitData(it)
-                showLoading(false)
+                //showLoading(false)
             }
         }
 
         homeViewModel.listVegetables.observe(viewLifecycleOwner) {
             if (it != null) {
                 listVegetableAdapter.setVegetableData(it)
-                showLoading(false)
+                //showLoading(false)
             }
         }
 

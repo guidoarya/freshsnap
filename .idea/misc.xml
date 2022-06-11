@@ -45,14 +45,26 @@
         <entry key="..\:/Users/Acer/AndroidStudioProjects/freshsnap/app/src/main/res/layout/vegetable_layout.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/bg_button.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/circle.xml" value="0.121" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/corners_outline_detail.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_camera.xml" value="0.11" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_exit.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_gallery.xml" value="0.11" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/ic_image_search.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/drawable/menu_background_rounded.xml" value="0.1" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_detail.xml" value="0.2" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_detail_percent.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_first.xml" value="0.1" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_second.xml" value="0.2" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fragment_third.xml" value="0.2" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/fruit_layout.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/history_row.xml" value="0.25" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/how_to_keep.xml" value="0.1644021739130435" />
         <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/popup_choose_image_source.xml" value="0.264" />
+        <entry key="..\:/Users/Daniel Octavianto/AndroidStudioProjects/freshsnap/app/src/main/res/layout/recipe.xml" value="0.1644021739130435" />
       </map>
     </option>
   </component>

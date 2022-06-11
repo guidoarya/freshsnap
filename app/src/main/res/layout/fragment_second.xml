@@ -31,11 +31,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:padding="32dp"
                 app:layout_constraintBottom_toTopOf="@+id/cameraButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_image_background" />
+                app:srcCompat="@drawable/background_upload_image" />
         </androidx.cardview.widget.CardView>
 
 
@@ -90,12 +91,14 @@
 
         <TextView
             android:id="@+id/percent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="32dp"
             android:text="@string/percentage"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.201"
@@ -156,7 +159,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:text="@string/if_freshness"
-            android:textColor="@color/black"
+            android:textColor="@color/green_primary"
             android:textSize="25sp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -167,11 +170,13 @@
 
         <TextView
             android:id="@+id/tips"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:layout_marginStart="32dp"
             android:text="@string/how_to_keep"
             android:textSize="20sp"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -202,6 +207,8 @@
             android:id="@+id/rv_how_to_keep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginTop="10dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/vector_2"
@@ -211,13 +218,14 @@
 
         <TextView
             android:id="@+id/recipe"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="25dp"
             android:text="@string/food_reference"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/rv_how_to_keep"
             app:layout_constraintTop_toBottomOf="@id/rv_how_to_keep"
@@ -246,6 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="32dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/vector_1"
             app:layout_constraintStart_toStartOf="@id/vector_1"
@@ -258,10 +267,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/chooseButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

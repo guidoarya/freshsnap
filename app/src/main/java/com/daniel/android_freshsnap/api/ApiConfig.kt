@@ -1,6 +1,8 @@
 package com.daniel.android_freshsnap.api
 
-import androidx.viewbinding.BuildConfig
+
+import com.daniel.android_freshsnap.BuildConfig
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,9 +19,12 @@ class ApiConfig {
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build()
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://winter-quanta-351315.as.r.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
             return retrofit.create(ApiService::class.java)

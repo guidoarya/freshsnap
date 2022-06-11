@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/imageUser"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,8 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginStart="16dp"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@id/imageUser"
         app:layout_constraintTop_toTopOf="@id/imageUser"
         app:layout_constraintBottom_toBottomOf="@id/imageUser"/>
@@ -31,8 +33,9 @@
         android:id="@+id/history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/history"
-        android:layout_marginTop="60dp"
+        android:text="@string/list_user"
+        android:textColor="@color/black"
+        android:layout_marginTop="32dp"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/imageUser"
@@ -59,25 +62,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="@id/vector_3"
         app:layout_constraintStart_toStartOf="@id/vector_3"
         app:layout_constraintTop_toBottomOf="@id/vector_3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_exit"
-        android:layout_width="150dp"
-        android:layout_height="64dp"
-        android:drawableLeft="@drawable/ic_exit"
-        android:layout_marginBottom="16dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/green_primary"
+        android:src="@drawable/ic_exit"
         android:text="@string/logout"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/rv_history"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -85,10 +90,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_history"
+        app:layout_constraintEnd_toEndOf="@+id/rv_history"
+        app:layout_constraintStart_toStartOf="@+id/rv_history"
+        app:layout_constraintTop_toTopOf="@+id/rv_history"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

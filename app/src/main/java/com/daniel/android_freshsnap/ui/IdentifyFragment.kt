@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
@@ -17,18 +18,20 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.daniel.android_freshsnap.adapter.ListHowToAdapter
 import com.daniel.android_freshsnap.adapter.ListRecipeAdapter
 import com.daniel.android_freshsnap.api.ApiConfig
-import com.daniel.android_freshsnap.api.response.DetailResponse
 import com.daniel.android_freshsnap.api.response.ReviewResponse
 import com.daniel.android_freshsnap.databinding.FragmentSecondBinding
 import com.daniel.android_freshsnap.databinding.PopupChooseImageSourceBinding
 import com.daniel.android_freshsnap.ml.ModelFreshsnap
-import com.daniel.android_freshsnap.utils.Utils
+import com.daniel.android_freshsnap.utils.Utils.createTempFile
+import com.daniel.android_freshsnap.utils.Utils.reduceFileImage
+import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
 import com.daniel.android_freshsnap.utils.Utils.uriToFile
 import com.daniel.android_freshsnap.viewmodel.DetailViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -60,7 +63,7 @@ class IdentifyFragment : Fragment() {
     private var progr = 0
     private var imageSize = 150
     private var currentFile: File? = null
-
+    lateinit var itemName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +77,7 @@ class IdentifyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
 
         rvRecipe = binding.rvRecipe
@@ -102,53 +105,54 @@ class IdentifyFragment : Fragment() {
         }
         binding.shareBtn.setOnClickListener {
             uploadImage()
-            showLoading(true)
+            //showLoading(true)
         }
         setupPopupMenu()
     }
 
     private fun uploadImage() {
+
         if (currentFile != null){
 
-            val file = currentFile as File
+            val file = reduceFileImage(currentFile as File)
             userPreferences = this.requireActivity().getSharedPreferences(LoginActivity.PREFS_USER, Context.MODE_PRIVATE)
             val location = binding.edtLoc.text.toString().toRequestBody()
-            val email = userPreferences.getString(LoginActivity.EMAIL, "").toString()
-            val password = userPreferences.getString(LoginActivity.PASSWORD, "").toString()
+            val item_name = itemName.toRequestBody()
+            val user_name = userPreferences.getString(LoginActivity.NAME, "")!!.toRequestBody()
+            val token = userPreferences.getString(LoginActivity.TOKEN, "").toString()
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
+            val image: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "image",
                 file.name,
                 requestImageFile
             )
 
-            val service = ApiConfig.getApiService().upload(imageMultipart, location)
-            service.enqueue(object : Callback<ReviewResponse> {
+            val client = ApiConfig.getApiService().upload(image, location, item_name, user_name,"Bearer $token")
+            client.enqueue(object : Callback<ReviewResponse> {
                 override fun onResponse(
                     call: Call<ReviewResponse>,
                     response: Response<ReviewResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful && response.code() == 201){
                         val responseBody =  response.body()
                         if (responseBody != null){
                             Log.d(TAG, response.body().toString())
-                            Toast.makeText(requireActivity(), "Sukses", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show()
                         }
                     }else{
                         Log.e(TAG, "onFailure : ${response.message()}")
-                        Toast.makeText(requireActivity(), "Coba lagi", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
                     Log.e(TAG, "onFailure: ${t.message}")
-                    Toast.makeText(requireActivity(), "Gagal", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "New list has been created!", Toast.LENGTH_SHORT).show()
                 }
 
             })
 
         }else{
-            Toast.makeText(requireActivity(), "Silahkan masukkan berkas dahulu", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Please input image first!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -242,6 +246,8 @@ class IdentifyFragment : Fragment() {
 
         val output = String.format("%s", itemList[maxPos])
 
+        getItemName(output)
+
         setUser(output)
 
         progr = (confidences[maxPos] * 100).toInt()
@@ -250,6 +256,10 @@ class IdentifyFragment : Fragment() {
 
         // Releases model resources if no longer used.
         model.close()
+    }
+
+    private fun getItemName(output: String){
+        itemName = output
     }
 
     private fun setUser(output: String) {
@@ -327,11 +337,23 @@ class IdentifyFragment : Fragment() {
 
     private fun startCameraX() {
         val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        camera.resolveActivity(requireActivity().packageManager)
+        val app = requireActivity().application
+        createTempFile(app).also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.daniel.android_freshsnap",
+                it
+            )
+            currentPhotoPath = it.absolutePath
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            startActivityForResult(camera, 200)
 
-        startActivityForResult(camera, 200)
+        }
+
     }
 
-    private lateinit var currentPhotoPath: String
+    lateinit var currentPhotoPath: String
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -340,7 +362,7 @@ class IdentifyFragment : Fragment() {
 
             val uri : Uri ?= data.data
 
-            val myFile = uriToFile(data?.data as Uri, requireContext())
+            val myFile = uriToFile(data.data as Uri, requireContext())
 
             currentFile = myFile
 
@@ -350,22 +372,31 @@ class IdentifyFragment : Fragment() {
 
             val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, true)
             binding.process.setOnClickListener{
-                predictImage(image)
-                show(true)
+                if(image != null) {
+                    predictImage(image)
+                    show(true)
+                }else{
+                    Toast.makeText(requireActivity(), "Please input image first!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         else if(requestCode == 200 && resultCode == Activity.RESULT_OK){
-            var image = data!!.extras!!["data"] as Bitmap?
-            val dimension = image!!.width.coerceAtMost(image.height)
-            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
             val myFile = File(currentPhotoPath)
             currentFile = myFile
+            var result = rotateBitmap(BitmapFactory.decodeFile(myFile.path), true)
 
-            binding.previewImageView.setImageBitmap(image)
-            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, true)
+            val dimension = result.width.coerceAtMost(result.height)
+            result = ThumbnailUtils.extractThumbnail(result, dimension, dimension)
+
+            binding.previewImageView.setImageBitmap(result)
+            result = Bitmap.createScaledBitmap(result, imageSize, imageSize, true)
             binding.process.setOnClickListener{
-                predictImage(image)
-                show(true)
+                if(result != null) {
+                    predictImage(result)
+                    show(true)
+                }else{
+                    Toast.makeText(requireActivity(), "Please input image first!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

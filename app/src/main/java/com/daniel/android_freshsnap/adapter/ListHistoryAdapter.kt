@@ -1,43 +1,38 @@
 package com.daniel.android_freshsnap.adapter
-/*
+
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.daniel.android_freshsnap.data.Fruits
 import com.daniel.android_freshsnap.databinding.HistoryRowBinding
-import com.example.storyapp.stories.HistoryDiffUtils
-import java.util.ArrayList
+import com.daniel.android_freshsnap.api.response.ListResponse
 
-//contoh
-class ListHistoryAdapter(private val listFruit: ArrayList<Fruits>): RecyclerView.Adapter<ListHistoryAdapter.ViewHolder>() {
 
-    private var oldStoryItem = emptyList<Fruits>()
+class ListHistoryAdapter(private val listReview: List<ListResponse.ListResponseItem>) : RecyclerView.Adapter<ListHistoryAdapter.ListViewHolder>() {
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(HistoryRowBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
+    class ListViewHolder(var binding: HistoryRowBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(oldStoryItem[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val binding = HistoryRowBinding.inflate(
+            LayoutInflater.from(parent.context)
+            , parent, false)
+        return ListViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = oldStoryItem.size
-
-    class ViewHolder(private val binding: HistoryRowBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(listItem: Fruits){
-            Glide.with(itemView)
-                .load(listItem.photo_fruit)
-                .into(binding.imgPhoto)
-
-            binding.name.text = listItem.name_fruit
-        }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        val result = listReview[position]
+        holder.binding.username.text = result.userName
+        Glide.with(holder.itemView)
+            .load(result.image)
+            .into(holder.binding.imgPhoto)
+        holder.binding.date.text = result.createdAt
+        holder.binding.location.text = result.location
+        holder.binding.name.text = result.itemName
     }
 
-    fun setData(newStoryItem: List<Fruits>) {
-        val diffUtil = HistoryDiffUtils(oldStoryItem, newStoryItem)
-        val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldStoryItem = newStoryItem
-        diffResult.dispatchUpdatesTo(this)
-    }
-}*/
+    override fun getItemCount(): Int = listReview.size
+
+}

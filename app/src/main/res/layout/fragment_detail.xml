@@ -11,6 +11,7 @@
         android:layout_width="320dp"
         android:layout_height="200dp"
         android:layout_marginTop="40dp"
+
         android:src="@drawable/orange_fruit"
         android:background="@drawable/corners_outline_detail"
         android:layout_marginStart="8dp"
@@ -26,7 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/orange"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="@id/imageView"
         app:layout_constraintTop_toBottomOf="@id/imageView"/>
@@ -35,12 +38,14 @@
         android:id="@+id/how_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/how_to_keep"
         android:layout_marginTop="25dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/how_to_keep"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/tv_type"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_type" />
 
     <View
         android:id="@+id/vector_3"
@@ -60,27 +65,33 @@
 
     <TextView
         android:id="@+id/tv_howto"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/howto"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:lineSpacingExtra="8dp"
+        android:textColor="@color/black"
         android:padding="10dp"
+        android:text="@string/howto"
         android:textSize="14sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@id/vector_3"
-        app:layout_constraintTop_toBottomOf="@id/vector_3"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vector_3" />
 
     <TextView
         android:id="@+id/recipe"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/food_reference"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="16dp"
         android:textSize="20sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_howto"
-        app:layout_constraintTop_toBottomOf="@id/tv_howto"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_howto" />
 
     <View
         android:id="@+id/vector_2"
@@ -102,7 +113,8 @@
         android:id="@+id/rv_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@id/vector_2"
         app:layout_constraintEnd_toEndOf="@id/vector_2"
         app:layout_constraintTop_toBottomOf="@id/vector_2"/>
@@ -110,13 +122,16 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:padding="32dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_recipe"
+        app:layout_constraintEnd_toEndOf="@+id/rv_recipe"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/rv_recipe"
+        app:layout_constraintTop_toTopOf="@id/rv_recipe"
         tools:visibility="visible" />
 
 

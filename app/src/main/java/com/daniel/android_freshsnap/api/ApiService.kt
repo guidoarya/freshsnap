@@ -33,13 +33,19 @@ interface ApiService {
         @Path("id") id: Int?
     ): Call<DetailResponse>
 
+
     @Multipart
     @POST("history")
     fun upload(
-        //@Header("Authorization") token: String,
-        //@Field("email") email: String,
-        //@Field("password") password: String,
-        @Part file: MultipartBody.Part,
-        @Part("location") location: RequestBody
+        @Part image: MultipartBody.Part?,
+        @Part("location") location: RequestBody,
+        @Part("item_name") item_name: RequestBody,
+        @Part("user_name") user_name: RequestBody,
+        @Header("Authorization") token: String
     ): Call<ReviewResponse>
+
+    @GET("history")
+    fun getReview(
+        @Header("Authorization") token: String
+    ) : Call<List<ListResponse.ListResponseItem>>
 }

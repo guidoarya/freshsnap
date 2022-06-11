@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Android-Freshsnap</string>
     <string name="app_name2">Freshsnap</string>
-    <string name="fresh_snap_title">FreshSnap</string>
+    <string name="fresh_snap_title">Freshsnap</string>
 
     <string name="fruits">Fruits</string>
     <string name="vegetables">Vegetables</string>
@@ -30,9 +30,9 @@
     <string name="how_to_keep">How to keep</string>
     <string name="food_reference">Food and beverage reference</string>
     <string name="percentage">Freshness Percentage</string>
-    <string name="history">Review</string>
+    <string name="list_user">List User Freshsnap</string>
     <string name="remember">Remember Me</string>
-    <string name="location">Location</string>
+    <string name="location">Add Location</string>
     <string name="share">Share</string>
     <string name="percent">0%</string>
     <string name="if_freshness">Fresh or Rotten</string>

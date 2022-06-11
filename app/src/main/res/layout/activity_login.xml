@@ -111,7 +111,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edt_email"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
         tools:visibility="visible" />
 
 

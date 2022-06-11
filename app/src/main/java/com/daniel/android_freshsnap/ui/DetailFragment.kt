@@ -45,7 +45,7 @@ class DetailFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setLogo(R.drawable.ic_back)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayUseLogoEnabled(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Fruit Detail"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Detail"
 
 
         val id = arguments?.getInt(EXTRA_ID)

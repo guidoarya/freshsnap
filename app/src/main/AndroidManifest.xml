@@ -43,10 +43,6 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".ui.CameraActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
             android:name=".ui.RegisterActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
@@ -59,6 +55,15 @@
             android:screenOrientation="portrait"
             android:exported="true">
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.daniel.android_freshsnap"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
