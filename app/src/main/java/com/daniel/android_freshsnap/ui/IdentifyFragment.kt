@@ -32,6 +32,7 @@ import com.daniel.android_freshsnap.ml.ModelFreshsnap
 import com.daniel.android_freshsnap.utils.Utils.createTempFile
 import com.daniel.android_freshsnap.utils.Utils.reduceFileImage
 import com.daniel.android_freshsnap.utils.Utils.rotateBitmap
+import com.daniel.android_freshsnap.utils.Utils.rotateFileImage
 import com.daniel.android_freshsnap.utils.Utils.uriToFile
 import com.daniel.android_freshsnap.viewmodel.DetailViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -380,13 +381,14 @@ class IdentifyFragment : Fragment() {
         }
         else if(requestCode == 200 && resultCode == Activity.RESULT_OK){
             val myFile = File(currentPhotoPath)
-            currentFile = myFile
             var result = rotateBitmap(BitmapFactory.decodeFile(myFile.path), true)
 
             val dimension = result.width.coerceAtMost(result.height)
             result = ThumbnailUtils.extractThumbnail(result, dimension, dimension)
 
             binding.previewImageView.setImageBitmap(result)
+
+            currentFile = rotateFileImage(myFile)
             result = Bitmap.createScaledBitmap(result, imageSize, imageSize, true)
             binding.process.setOnClickListener{
                 if(result != null) {

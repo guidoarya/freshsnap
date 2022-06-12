@@ -91,6 +91,24 @@ object Utils {
         }
     }
 
+    fun rotateFileImage(file: File): File {
+        val bitmap = BitmapFactory.decodeFile(file.path)
+        val matrix = Matrix()
+        matrix.postRotate(90f)
+        val bitmaps = Bitmap.createBitmap(
+            bitmap,
+            0,
+            0,
+            bitmap.width,
+            bitmap.height,
+            matrix,
+            true
+        )
+        bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
+
+        return file
+    }
+
     fun uriToFile(selectedImg: Uri, context: Context): File {
         val contentResolver: ContentResolver = context.contentResolver
         val myFile = createTempFile(context)
