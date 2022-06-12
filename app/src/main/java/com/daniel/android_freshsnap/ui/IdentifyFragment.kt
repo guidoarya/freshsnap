@@ -103,10 +103,7 @@ class IdentifyFragment : Fragment() {
         detailViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-        binding.shareBtn.setOnClickListener {
-            uploadImage()
-            //showLoading(true)
-        }
+
         setupPopupMenu()
     }
 
@@ -133,19 +130,16 @@ class IdentifyFragment : Fragment() {
                     call: Call<ReviewResponse>,
                     response: Response<ReviewResponse>
                 ) {
-                    if (response.isSuccessful && response.code() == 201){
-                        val responseBody =  response.body()
-                        if (responseBody != null){
-                            Log.d(TAG, response.body().toString())
-                            Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show()
-                        }
+                    if (response.code() == 201){
+                        Log.d(TAG, response.body().toString())
+                        Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show()
                     }else{
-                        Log.e(TAG, "onFailure : ${response.message()}")
+                        Log.d(TAG, "onFailure: ${response.message()}")
                     }
                 }
 
                 override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
-                    Log.e(TAG, "onFailure: ${t.message}")
+                    Log.d(TAG, "onFailure: ${t.message}")
                     Toast.makeText(requireActivity(), "New list has been created!", Toast.LENGTH_SHORT).show()
                 }
 
@@ -375,6 +369,10 @@ class IdentifyFragment : Fragment() {
                 if(image != null) {
                     predictImage(image)
                     show(true)
+                    binding.shareBtn.setOnClickListener {
+                        uploadImage()
+                        //showLoading(true)
+                    }
                 }else{
                     Toast.makeText(requireActivity(), "Please input image first!", Toast.LENGTH_SHORT).show()
                 }
@@ -394,6 +392,10 @@ class IdentifyFragment : Fragment() {
                 if(result != null) {
                     predictImage(result)
                     show(true)
+                    binding.shareBtn.setOnClickListener {
+                        uploadImage()
+                        //showLoading(true)
+                    }
                 }else{
                     Toast.makeText(requireActivity(), "Please input image first!", Toast.LENGTH_SHORT).show()
                 }
