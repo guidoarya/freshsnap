@@ -11,6 +11,9 @@ FreshSnap is a shopping companion application, which is expected to help user to
 * https://www.kaggle.com/datasets/alibaloch/vegetables-fruits-fresh-and-stale
 * https://www.kaggle.com/datasets/shivanir23/good-and-bad-fruits-ieee-extended
 
+## Network 
+In this model, we use Convolutional Neural Networks. We use 20 classes with six fruits and four vegetables: a fresh and rotten apple, banana, guava, lime, orange, pomegranate, cucumber, okra, potato, and tomato. For the result, we create the prediction added by the percentage result as the confidence level.
+
 ## Machine Learning
 To develop this machine learning model. we tried to train our model with Convolutional Neural Network and Transfer Learning. We find the best model to predict by using Convolutional Neural Network as our final model. 
 
