@@ -82,7 +82,7 @@ export const Register = async (req, res) => {
     });
     res.json({ msg: "Registration has been successful!" });
   } catch (err) {
-    console.log(err);
+    res.status(500).send(err);
   }
 };
 
@@ -113,7 +113,7 @@ export const updateUser = async (req, res) => {
       message: "Account has been successfully updated",
     });
   } catch (err) {
-    console.log({ message: err.message });
+    res.status(500).send(err);
   }
 };
 
@@ -149,7 +149,6 @@ export const Login = async (req, res) => {
     });
     res.json({ token });
   } catch (err) {
-    console.log(err);
     res.status(404).json({ msg: "Email not found!" });
   }
 };
@@ -167,7 +166,6 @@ export const Logout = async (req, res) => {
     res.cookie("jwt", token);
     return res.status(200).json({ msg: "Logout successfully!" });
   } catch (err) {
-    console.log(err.message);
     return res.status(500).json(err);
   }
 };

@@ -44,7 +44,7 @@ export const detail = async (req, res) => {
       },
     });
 
-    res.json({
+    res.status(200).json({
       Detail,
       Reference,
     });

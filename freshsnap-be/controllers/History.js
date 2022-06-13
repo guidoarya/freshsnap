@@ -60,7 +60,7 @@ export const deleteHistory = async (req, res) => {
   if (!findHistory) {
     return res.status(404).send("History is not found!");
   }
-  const imageName = findItem.image.substring(findItem.image.indexOf("e/") + 2);
+  const imageName = findHistory.image.substring(findHistory.image.indexOf("e/") + 2);
 
   try {
     const file = bucket.file(`${imageName}`);

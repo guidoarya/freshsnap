@@ -1,12 +1,6 @@
 import { Sequelize } from "sequelize";
 
-// const database = "freshsnap";
-// const username = "root";
-// const password = "";
-// const host = "localhost";
-
 const host = "35.225.57.110";
-// const host = "35.193.248.160";
 const database = "freshsnap";
 const username = "root";
 const password = "root";

@@ -60,7 +60,7 @@ export const deleteReference = async (req, res) => {
   });
 
   if (!findReference) {
-    return res.send("References is not found!");
+    return res.status(404).send("References is not found!");
   }
 
   const imageName = findReference.image.substring(findReference.image.indexOf("e/") + 2);
@@ -77,6 +77,6 @@ export const deleteReference = async (req, res) => {
       msg: "References was deleted!",
     });
   } catch (err) {
-    console.log({ msg: err.message });
+    res.status(500).json({ msg: err.message });
   }
 };
