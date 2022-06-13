@@ -15,20 +15,20 @@ How to make the application
 
 Used library
 --
-Freshsnap use some library to support the functionality of the application
-1. Fragment
+Freshnap use some library to support the functionality of the application
+1. Fragment :
 To create navigation in android.
-2. Glide
+2. Glide :
 To make it easier to process photos into layouts, and maintain the quality of uploaded photos.
-3. Retrofit
+3. Retrofit :
 Networking library to handle Network Call and communicate with web server
-4. Retrofit Converter Gson (2.9.0)
+4. Retrofit Converter Gson :
 Retrofit extension library to parse Javascript Object Notation (JSON) data
-5. OkHttp
+5. OkHttp :
 To make a request to a URL.
-6. JWT (JSON Web Tokens)
+6. JWT (JSON Web Tokens) :
 To retrieve token from database
-7. Material
+7. Material :
 Displaying photos on adapter with glide
 
 
