@@ -359,7 +359,7 @@ class IdentifyFragment : Fragment() {
 
             val myFile = uriToFile(data.data as Uri, requireContext())
 
-            currentFile = myFile
+            currentFile = rotateFileImage(myFile)
 
             val resolver = requireActivity().contentResolver
 
