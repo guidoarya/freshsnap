@@ -1,6 +1,0 @@
-endpoints_api_service:
-  # The following values are to be replaced by information from the output of
-  # 'gcloud endpoints services deploy openapi-appengine.yaml' command.
-  name: https://winter-quanta-351315.appspot.com/
-  rollout_strategy: managed
-  runtime: 16.13.2
