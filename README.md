@@ -15,7 +15,7 @@ How to make the application
 
 Used library
 --
-Freshnap use some library to support the functionality of the application
+Freshsnap use some library to support the functionality of the application
 1. Fragment
 To create navigation in android.
 2. Glide
