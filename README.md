@@ -42,7 +42,8 @@ Step to Reproduce
 
 Screenshot Application
 --
-![Copy of Copy of Screenshot_20220613-075045_Freshsnap](https://user-images.githubusercontent.com/63099572/173269721-0aed9df0-165c-4a8a-a842-4fff02b8adb0.jpg)
-![Screenshot_20220613-072547_Freshsnap](https://user-images.githubusercontent.com/63099572/173269736-4eb2c6c0-3cd5-4d38-9f14-b36417084d03.jpg)
-![Screenshot_20220613-074925_Freshsnap](https://user-images.githubusercontent.com/63099572/173270055-869ebeed-e054-40aa-98bc-103348c6cec0.jpg)
+![WhatsApp Image 2022-06-13 at 09 58 14](https://user-images.githubusercontent.com/63099572/173271730-c3cd52b7-ef7c-4300-9cc2-00f935751dd5.jpeg)
+![WhatsApp Image 2022-06-13 at 09 59 50](https://user-images.githubusercontent.com/63099572/173271851-881da915-7fee-428c-b3c0-15d0833bebe6.jpeg)
+
+
 
